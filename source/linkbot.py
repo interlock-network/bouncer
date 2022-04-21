@@ -3,7 +3,7 @@
 import configparser
 import logging
 import discord
-
+import re
 
 # Set the logging up
 logging.basicConfig(level=logging.INFO)
@@ -23,6 +23,13 @@ client = discord.Client()
 async def on_ready():
     """Invoke when the bot has connected to Discord."""
     print(f'{client.user} has connected to Discord!')
+
+
+def url(str):
+    """Find and return all URLs in a string."""
+    urlRegex = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
+    [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
+    return urlRegex
 
 
 @client.event
