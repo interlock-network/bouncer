@@ -35,7 +35,7 @@ def url(str):
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
-    print(message.content)
+    print(url(message.content))
 
 
 if __name__ == '__main__':
