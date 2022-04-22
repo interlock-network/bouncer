@@ -22,8 +22,8 @@ token = token_from_config or token_from_environment
 
 if (token_from_config and token_from_environment and
    token_from_config != token_from_environment):
-    print("Conflicting Discord token set via config file\
-AND environment variable!")
+    logging.warning("Different Discord token set via configuration.ini file \
+AND environment variable! Prioritizing token from configuration.ini.")
 
 # Create a discord client
 client = discord.Client()
