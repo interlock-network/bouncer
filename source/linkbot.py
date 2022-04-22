@@ -15,6 +15,7 @@ configuration.read('configuration.ini')
 
 # Get needed values from the configuration.ini file
 token_from_config = configuration.get('discord', 'token')
+# Get the needed values from the environment variables
 token_from_environment = os.getenv('DISCORD_TOKEN')
 
 # Set the token either by config or environment variable
