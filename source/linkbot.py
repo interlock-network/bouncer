@@ -4,6 +4,7 @@ import configparser
 import logging
 import discord
 import re
+import os
 
 # Set the logging up
 logging.basicConfig(level=logging.INFO)
@@ -13,7 +14,16 @@ configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
 # Get needed values from the configuration.ini file
-token = configuration.get('discord', 'token')
+token_from_config = configuration.get('discord', 'token')
+token_from_environment = os.getenv('DISCORD_TOKEN')
+
+# Set the token either by config or environment variable
+token = token_from_config or token_from_environment
+
+if (token_from_config and token_from_environment and
+   token_from_config != token_from_environment):
+    print("Conflicting Discord token set via config file\
+AND environment variable!")
 
 # Create a discord client
 client = discord.Client()
