@@ -43,10 +43,19 @@ def url(str):
     return urlRegex
 
 
+def urlp(str):
+    """Return true or false depending on whether a string contains a URL."""
+    if (len(url(str)) > 0):
+        return True
+    else:
+        return False
+
+
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
-    print(url(message.content))
+    if urlp(message.content):
+        await message.delete()
 
 
 if __name__ == '__main__':
