@@ -1,5 +1,6 @@
 """Main entry point for the Linkbot."""
 
+import requests
 import configparser
 import logging
 import discord
