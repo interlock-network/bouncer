@@ -37,16 +37,16 @@ async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
 
-def url(str):
+def urls_from_str(str):
     """Find and return all URLs in a string."""
     urlRegex = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
     [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
     return urlRegex
 
 
-def urlp(str):
-    """Return true or false depending on whether a string contains a URL."""
-    if (len(url(str)) > 0):
+def str_contains_url_p(str):
+    """Return True or False depending on whether a string contains a URL."""
+    if (len(urls_from_str(str)) > 0):
         return True
     else:
         return False
@@ -55,7 +55,7 @@ def urlp(str):
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
-    if urlp(message.content):
+    if str_contains_url_p(message.content):
         await message.delete()
 
 
