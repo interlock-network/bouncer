@@ -84,6 +84,7 @@ async def on_message(message):
             await message.reply(
                 content="Message contains dangerous links! `{0}`".format(
                     message.content))
+            await message.delete()
             break
 
 if __name__ == '__main__':
