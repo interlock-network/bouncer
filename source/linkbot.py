@@ -52,6 +52,28 @@ def str_contains_url_p(str):
         return False
 
 
+def url_malicious_p(url):
+    """Return True or False depending on whether a URL is malicious or not."""
+    r = requests.get("https://perceptual.apozy.com/host/{0}".format(url))
+    rjson = r.json()
+
+    # If there was an error with the API, we cannot guarantee anything
+    try:
+        rjson()['error']
+        logging.warning("API error for URL %s", url)
+        return False
+    except KeyError:
+        pass
+
+    # If there is a corresponding traffic rank entry, the URL is well rated
+    try:
+        rjson()['trafficRank']
+        return True
+    except KeyError:
+        logging.info("Traffic rank not available for URL %s", url)
+        return False
+
+
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
