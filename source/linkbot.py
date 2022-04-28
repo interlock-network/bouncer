@@ -79,7 +79,7 @@ async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
     for url in urls_from_str(message.content):
         if (url_malicious_p(url)):
-            await message.edit(
+            await message.reply(
                 content="Message contains dangerous links! `{0}`".format(
                     message.content))
             break
