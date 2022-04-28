@@ -59,7 +59,7 @@ def url_malicious_p(url):
 
     # If there was an error with the API, we cannot guarantee anything
     try:
-        rjson()['error']
+        rjson['error']
         logging.warning("API error for URL %s", url)
         return False
     except KeyError:
@@ -67,7 +67,7 @@ def url_malicious_p(url):
 
     # If there is a corresponding traffic rank entry, the URL is well rated
     try:
-        rjson()['trafficRank']
+        rjson['trafficRank']
         return True
     except KeyError:
         logging.info("Traffic rank not available for URL %s", url)
