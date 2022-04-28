@@ -77,6 +77,8 @@ def url_malicious_p(url):
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
+    if message.author.bot:
+        return
     for url in urls_from_str(message.content):
         if (url_malicious_p(url)):
             await message.reply(
