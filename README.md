@@ -45,3 +45,9 @@ Discord interface. The processes are explained and outlined at the
 resource below.
 
 https://realpython.com/how-to-make-a-discord-bot-python/
+
+# Authorizing Linkbot for your server
+
+Visit the following URL to authorize Linkbot to run on your own
+server:
+https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permissions=1641751637056&scope=bot
