@@ -1,7 +1,19 @@
 # Linkbot
 A Discord bot to scan for & neutralize malicious links.
 
+# Dependencies:
+
+- Python 3.8
+- Python Discord.py
+- Python Requests
+
 # Deployment instructions
+
+## Configuration
+
+You'll need to populate the `configuration.ini` file OR set the
+environment variable `DISCORD_TOKEN` with the value of your Discord
+token.
 
 ## Ubuntu 20.04
 
@@ -9,7 +21,7 @@ A Discord bot to scan for & neutralize malicious links.
 2. Install `apt install python3.8-venv` to be able to create virtual environments.
 3. Install make: `apt install make`.
 4. Create a virtual Python environment `python3 -m venv /path/to/environment`
-5. Start GNU `screen` to create a new detachable session.
+5. Start GNU `screen` to create a new detachable shell session.
 6. Activate your Python virtual environment `source /path/to/environment/bin/activate`
 7. Use `pip` to install all Python dependencies as specified in this
    repository's corresponding `shell.nix` file.
@@ -26,3 +38,10 @@ A Discord bot to scan for & neutralize malicious links.
 2. Execute `make run` in this repository's root.
 3. (Optional) utilize `GNU screen` to create a detachable session.
 
+# Setting up a bot:
+
+In order to set-up a bot, you have to do several processes within the
+Discord interface. The processes are explained and outlined at the
+resource below.
+
+https://realpython.com/how-to-make-a-discord-bot-python/
