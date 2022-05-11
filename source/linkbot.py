@@ -35,6 +35,9 @@ client = discord.Client()
 async def on_ready():
     """Invoke when the bot has connected to Discord."""
     print(f'{client.user} has connected to Discord!')
+    # Set the bot profile picture
+    with open('profile.png', 'rb') as image:
+        await client.user.edit(avatar=image.read())
 
 
 def urls_from_str(str):
