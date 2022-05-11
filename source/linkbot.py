@@ -82,8 +82,8 @@ async def on_message(message):
     for url in urls_from_str(message.content):
         if (url_malicious_p(url)):
             await message.reply(
-                content="Message contains dangerous links! `{0}`".format(
-                    message.content))
+                content="Message contains dangerous links! `{0}:{1}`".format(
+                    message.author.name, message.content))
             await message.delete()
             break
 
