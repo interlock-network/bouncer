@@ -51,3 +51,19 @@ https://realpython.com/how-to-make-a-discord-bot-python/
 Visit the following URL to authorize Linkbot to run on your own
 server:
 https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permissions=1641751637056&scope=bot
+
+# Testing Linkbot
+
+To test if Linkbot is working, post the following known-unsafe link in a channel Linkbot is monitoring: `https://ambrevar.xyz`
+
+Your message should immediately be deleted and Linkbot should post the following: 
+
+```
+Message contains dangerous links! NAME: https://ambrevar.xyz
+```
+
+Here's a screenshot of the expected behavior:
+
+<img width="421" alt="Screen Shot 2022-05-11 at 9 38 24 AM" src="https://user-images.githubusercontent.com/100495150/167902419-3f0e67be-2dc1-42ed-b051-d44fb72c0033.png">
+
+
