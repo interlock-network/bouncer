@@ -56,7 +56,7 @@ https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permission
 
 To test if Linkbot is working, post the following known-unsafe link in a channel Linkbot is monitoring: `https://ambrevar.xyz`
 
-Your message should immediately be deleted and Linkbot should post the following: 
+Your message should immediately be deleted and Linkbot should post the following:
 
 ```
 Message contains dangerous links! NAME: https://ambrevar.xyz
