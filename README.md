@@ -68,5 +68,3 @@ Message contains dangerous links! NAME: https://ambrevar.xyz
 Here's a screenshot of the expected behavior:
 
 <img width="421" alt="Interlock-bouncer reacting to a malicious link" src="reaction.png">
-
-
