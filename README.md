@@ -64,6 +64,6 @@ Message contains dangerous links! NAME: https://ambrevar.xyz
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Screen Shot 2022-05-11 at 9 38 24 AM" src="https://user-images.githubusercontent.com/100495150/167902419-3f0e67be-2dc1-42ed-b051-d44fb72c0033.png">
+<img width="421" alt="Interlock-bouncer reacting to a malicious link" src="reaction.png">
 
 
