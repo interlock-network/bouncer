@@ -1,4 +1,4 @@
-# Linkbot
+# Interlock-bouncer
 A Discord bot to scan for & neutralize malicious links.
 
 # Dependencies:
@@ -46,9 +46,9 @@ resource below.
 
 https://realpython.com/how-to-make-a-discord-bot-python/
 
-# Authorizing Linkbot for your server
+# Authorizing Interlock-bouncer for your server
 
-Visit the following URL to authorize Linkbot to run on your own
+Visit the following URL to authorize Interlock-bouncer to run on your own
 server:
 https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permissions=1641751637056&scope=bot
 

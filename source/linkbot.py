@@ -1,4 +1,4 @@
-"""Main entry point for the Linkbot."""
+"""Main entry point for the Interlock-bouncer."""
 
 import requests
 import configparser
