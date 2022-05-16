@@ -14,6 +14,9 @@ logging.basicConfig(level=logging.INFO)
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
+# Max URL length (from issue #28)
+max_url_length = 512
+
 # Get needed values from the configuration.ini file
 token_from_config = configuration.get('discord', 'token')
 # Get the needed values from the environment variables
@@ -83,6 +86,13 @@ async def on_message(message):
     if message.author.bot:
         return
     for url in urls_from_str(message.content):
+        if (len(url) > max_url_length):
+            await message.reply(
+                content="We cannot verify the safety of this link! **{0}:** `{1}`"
+                .format(message.author.name, message.content))
+            await message.delete()
+            break
+
         if (url_malicious_p(url)):
             await message.reply(
                 content="Message contains dangerous links! **{0}:** `{1}`"
