@@ -90,5 +90,18 @@ async def on_message(message):
             await message.delete()
             break
 
+@client.event
+async def on_message_edit(message):
+    """Invoke when a message is edited on the Guild/server."""
+    if message.author.bot:
+        return
+    for url in urls_from_str(message.content):
+        if (url_malicious_p(url)):
+            await message.reply(
+                content="Message contains dangerous links! **{0}:** `{1}`"
+                .format(message.author.name, message.content))
+            await message.delete()
+            break
+
 if __name__ == '__main__':
     client.run(token)
