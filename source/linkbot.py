@@ -55,6 +55,11 @@ def str_contains_url_p(str):
         return False
 
 
+def dangerous_url(str):
+    """Detect URLs that cannot be scanned: non-http or -https URLs"""
+    return bool(re.search('(?<!(http)):\/\/', str, re.IGNORECASE)) or bool(re.search('(?<!(https)):\/\/', str, re.IGNORECASE))
+
+
 def url_malicious_p(url):
     """Return True or False depending on whether a URL is malicious or not."""
     r = requests.get("https://perceptual.apozy.com/host/{0}".format(url))
@@ -82,6 +87,13 @@ async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
     if message.author.bot:
         return
+
+    if (dangerous_url(message.content)):
+        await message.reply(
+            content="Message contains URLs which cannot be scanned! **{0}:** `{1}`"
+            .format(message.author.name, message.content))
+        await message.delete()
+
     for url in urls_from_str(message.content):
         if (url_malicious_p(url)):
             await message.reply(
