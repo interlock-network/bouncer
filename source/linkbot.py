@@ -93,14 +93,24 @@ async def process_message(message):
     for url in urls_from_str(message.content):
         if (len(url) > max_url_length):
             await message.reply(
-                content="We cannot verify the safety of this link! **{0}:** `{1}`"
+                content="We cannot verify the safety of this link! \
+**{0}:** `{1}`"
+                .format(message.author.name, message.content))
+            await message.delete()
+            break
+
+        if (not url_http_p(url)):
+            await message.reply(
+                content="Message contains URLs which cannot be scanned! \
+**{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
             break
 
         if (url_malicious_p(url)):
             await message.reply(
-                content="Message contains dangerous links! **{0}:** `{1}`"
+                content="Message contains dangerous links! \
+**{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
             break
