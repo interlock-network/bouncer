@@ -50,6 +50,12 @@ def urls_from_str(str):
     return urlRegex
 
 
+def url_http_p(str):
+    """Return True or False depending on whether a URL is HTTP/s."""
+    urlRegex = re.search('^http[s]?', str)
+    return urlRegex
+
+
 def str_contains_url_p(str):
     """Return True or False depending on whether a string contains a URL."""
     if (len(urls_from_str(str)) > 0):
