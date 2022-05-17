@@ -77,9 +77,8 @@ def url_malicious_p(url):
         return True
 
 
-@client.event
-async def on_message(message):
-    """Invoke when a message is received on the Guild/server."""
+def process_message(message):
+    """Handle a message, deleting or stripping it of links."""
     if message.author.bot:
         return
     for url in urls_from_str(message.content):
@@ -90,18 +89,17 @@ async def on_message(message):
             await message.delete()
             break
 
+
+@client.event
+async def on_message(message):
+    """Invoke when a message is received on the Guild/server."""
+    process_message(message)
+
+
 @client.event
 async def on_message_edit(message):
     """Invoke when a message is edited on the Guild/server."""
-    if message.author.bot:
-        return
-    for url in urls_from_str(message.content):
-        if (url_malicious_p(url)):
-            await message.reply(
-                content="Message contains dangerous links! **{0}:** `{1}`"
-                .format(message.author.name, message.content))
-            await message.delete()
-            break
+    process_message(message)
 
 if __name__ == '__main__':
     client.run(token)
