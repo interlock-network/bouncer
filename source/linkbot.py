@@ -45,7 +45,7 @@ async def on_ready():
 
 def urls_from_str(str):
     """Find and return all URLs in a string."""
-    urlRegex = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
+    urlRegex = re.findall('[a-zA-Z]+?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
     [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
     return urlRegex
 
