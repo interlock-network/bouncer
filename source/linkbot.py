@@ -77,7 +77,7 @@ def url_malicious_p(url):
         return True
 
 
-def process_message(message):
+async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
     if message.author.bot:
         return
@@ -93,13 +93,13 @@ def process_message(message):
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
-    process_message(message)
+    await process_message(message)
 
 
 @client.event
-async def on_message_edit(message):
+async def on_message_edit(message_before, message_after):
     """Invoke when a message is edited on the Guild/server."""
-    process_message(message)
+    await process_message(message_after)
 
 if __name__ == '__main__':
     client.run(token)
