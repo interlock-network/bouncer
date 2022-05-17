@@ -15,7 +15,7 @@ configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
 # Max URL length (from issue #28)
-max_url_length = 512
+max_url_length = configuration.getint('configuration', 'max_url_length')
 
 # Get needed values from the configuration.ini file
 token_from_config = configuration.get('discord', 'token')
