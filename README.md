@@ -1,6 +1,12 @@
 # Interlock-bouncer
 A Discord bot to scan for & neutralize malicious links.
 
+# Status
+Warning: The Interlock-bouncer is in early alpha. The current
+implementation results in a high level of false positives (benign
+links marked as dangerous). In simpler terms, we err on the side of
+caution to keep your community safe.
+
 # Dependencies:
 
 - Python 3.8
