@@ -93,7 +93,7 @@ async def process_message(message):
     for url in urls_from_str(message.content):
         if (len(url) > max_url_length):
             await message.reply(
-                content="Caution: message contains URLs which cannot be scanned! \
+                content="Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
@@ -101,7 +101,7 @@ async def process_message(message):
 
         if (not url_http_p(url)):
             await message.reply(
-                content="Caution: message contains URLs which cannot be scanned! \
+                content="Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
@@ -109,7 +109,7 @@ async def process_message(message):
 
         if (url_malicious_p(url)):
             await message.reply(
-                content="Caution: message may contain dangerous links! \
+                content="Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
