@@ -62,13 +62,13 @@ https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permission
 
 To test if Interlock-bouncer is working, post the following
 known-unsafe link in a channel Interlock-bouncer is monitoring:
-`https://ambrevar.xyz`
+`http://phishing.com`
 
 Your message should immediately be deleted and Interlock-bouncer
 should post the following:
 
 ```
-Message contains dangerous links! NAME: https://ambrevar.xyz
+Message contains dangerous links! NAME: http://phishing.com
 ```
 
 Here's a screenshot of the expected behavior:
