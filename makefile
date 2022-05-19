@@ -8,4 +8,4 @@ help:
 	@cat HELP
 
 run:
-	$(PYTHON) source/linkbot.py
+	$(PYTHON) source/bouncer.py

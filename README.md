@@ -27,7 +27,7 @@ token.
    repository's corresponding `shell.nix` file.
 8. Execute `make run` within this repository's root.
 9. Press `C-a d`. That is, `Ctrl+a`, then let go, then press `d`. This
-   will detach you from your `screen` session, and allow `linkbot` to
+   will detach you from your `screen` session, and allow `bouncer` to
    continue running when you exit your `sh` session. If you wish to
    reconnect to your `screen` session, execute `screen -r`. For more
    information, please see the documentation for `GNU screen`.
