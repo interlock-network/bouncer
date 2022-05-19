@@ -99,7 +99,7 @@ async def process_message(message):
             await message.delete()
             break
 
-        if (not url_http_p(url)):
+        elif (not url_http_p(url)):
             await message.reply(
                 content="Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`"
@@ -107,13 +107,14 @@ async def process_message(message):
             await message.delete()
             break
 
-        if (url_malicious_p(url)):
+        elif (url_malicious_p(url)):
             await message.reply(
                 content="Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
             break
+
 
 
 @client.event
