@@ -113,8 +113,11 @@ async def process_message(message):
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
+            logging.info("URL marked as insecure: %s", url)
             break
 
+        # If we have made it to this point, URL is OK
+        logging.info("URL marked as secure: %s", url)
 
 
 @client.event
