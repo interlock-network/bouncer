@@ -7,15 +7,16 @@ import discord
 import re
 import os
 
-# Set the logging up
-logging.basicConfig(level=logging.INFO)
-
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
 # Max URL length (from issue #28)
 max_url_length = configuration.getint('configuration', 'max_url_length')
+
+# Set the logging up
+log_file = configuration.get('configuration', 'log_file')
+logging.basicConfig(filename=log_file, level=logging.INFO)
 
 # Get needed values from the configuration.ini file
 token_from_config = configuration.get('discord', 'token')
