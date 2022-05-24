@@ -1,4 +1,4 @@
-"""Main entry point for the Interlock-bouncer."""
+"""Main entry point for the Interlock-Bouncer."""
 
 import requests
 import configparser

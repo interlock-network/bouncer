@@ -64,7 +64,7 @@ https://realpython.com/how-to-make-a-discord-bot-python/
 
 # Authorizing Interlock-Bouncer for your server
 
-Visit the following URL to authorize Interlock-bouncer to run on your own
+Visit the following URL to authorize Interlock-Bouncer to run on your own
 server:
 https://discord.com/api/oauth2/authorize?client_id=966558765799342131&permissions=1641751637056&scope=bot
 
@@ -74,7 +74,7 @@ To test if Interlock-Bouncer is working, post the following
 known-unsafe link in a channel Interlock-Bouncer is monitoring:
 `http://phishing.com`
 
-Your message should immediately be deleted and Interlock-bouncer
+Your message should immediately be deleted and Interlock-Bouncer
 should post the following:
 
 ```
@@ -83,4 +83,4 @@ Message contains dangerous links! NAME: http://phishing.com
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Interlock-bouncer reacting to a malicious link" src="reaction.png">
+<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="reaction.png">
