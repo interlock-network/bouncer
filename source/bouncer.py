@@ -7,6 +7,11 @@ import discord
 import re
 import os
 
+from urllib.parse import urlparse
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from model import AllowDomain
+
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
@@ -30,6 +35,12 @@ if (token_from_config and token_from_environment and
    token_from_config != token_from_environment):
     logging.warning("Different Discord token set via configuration.ini file \
 AND environment variable! Prioritizing token from configuration.ini.")
+
+# Setup the SQLAlchemy session
+sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
+engine = create_engine(sqlalchemy_url, echo=True, future=True)
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 # Create a discord client
 client = discord.Client()
@@ -87,19 +98,32 @@ def url_malicious_p(url):
         return True
 
 
+def allow_url_p(url_object, server):
+    """Return True or False depending on whether a URL is to be ignored."""
+    query = session.query(AllowDomain).filter_by(
+        hostname=url_object.
+        hostname, server_id=server.id).first()
+    if query:
+        return True
+    else:
+        return False
+
+
 async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
     if message.author.bot:
         return
     for url in urls_from_str(message.content):
-        if (len(url) > max_url_length):
+        url_object = urlparse(url)
+        if (allow_url_p(url_object, message.guild)):
+            logging.info("URL ignored: %s", url)
+        elif (len(url) > max_url_length):
             await message.reply(
                 content="Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`"
                 .format(message.author.name, message.content))
             await message.delete()
             break
-
         elif (not url_http_p(url)):
             await message.reply(
                 content="Caution: message contains URLs which cannot be scanned! \n\
@@ -107,7 +131,6 @@ async def process_message(message):
                 .format(message.author.name, message.content))
             await message.delete()
             break
-
         elif (url_malicious_p(url)):
             await message.reply(
                 content="Caution: message may contain dangerous links! \n\
@@ -116,7 +139,6 @@ async def process_message(message):
             await message.delete()
             logging.info("URL marked as insecure: %s", url)
             break
-
         # If we have made it to this point, URL is OK
         logging.info("URL marked as secure: %s", url)
 
