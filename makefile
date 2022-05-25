@@ -9,3 +9,6 @@ help:
 
 run:
 	$(PYTHON) source/bouncer.py
+
+database:
+	$(PYTHON) source/model.py
