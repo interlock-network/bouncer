@@ -3,7 +3,7 @@
 import configparser
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Text, create_engine
+from sqlalchemy import Integer, Column, Text, create_engine
 
 
 Base = declarative_base()
@@ -12,10 +12,20 @@ Base = declarative_base()
 class AllowDomain(Base):
     """This class represents a hostname (domain) to allow on a server."""
 
-    __tablename__ = 'user'
-    id = Column(Text, primary_key=True)
+    __tablename__ = 'allowdomain'
+    id = Column(Integer, primary_key=True)
     hostname = Column(Text)
     server_id = Column(Text)
+
+    def __init__(self, hostname, server_id):
+        """Create a AllowDomain.
+
+        :param hostname: The hostname to allow.
+        :param server_id: The Discord guild/server id
+        :returns: nil
+        """
+        self.hostname = hostname
+        self.server_id = server_id
 
 
 if __name__ == '__main__':
