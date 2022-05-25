@@ -101,8 +101,8 @@ def url_malicious_p(url):
 def allow_url_p(url_object, server):
     """Return True or False depending on whether a URL is to be ignored."""
     query = session.query(AllowDomain).filter_by(
-        hostname=url_object.
-        hostname, server_id=server.id).first()
+        hostname=url_object.hostname,
+        server_id=server.id).first()
     if query:
         return True
     else:
@@ -143,10 +143,28 @@ async def process_message(message):
         logging.info("URL marked as secure: %s", url)
 
 
+async def process_message_command(message):
+    """Handle a command delivered as a message.
+
+    Return True if the message is a command.
+    """
+    if (message.content.lower().startswith('!allow_domains')):
+        urls = urls_from_str(message.content)
+        for url in urls:
+            url_object = urlparse(url)
+            session.add(AllowDomain(url_object.hostname, str(message.guild.id)))
+        session.commit()
+        await message.channel.send(f"URLs {urls} added to allow list.")
+        return True
+    else:
+        return False
+
+
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
-    await process_message(message)
+    if (not await process_message_command(message)):
+        await process_message(message)
 
 
 @client.event
