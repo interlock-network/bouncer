@@ -1,16 +1,17 @@
 """Main entry point for the Interlock-Bouncer."""
 
-import requests
+
 import configparser
 import logging
 import discord
-import re
 import os
 
 from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from model import AllowDomain
+from utility import urls_from_str
+from predicates import url_http_p, url_malicious_p, allow_url_p
 
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
@@ -55,67 +56,13 @@ async def on_ready():
         await client.user.edit(avatar=image.read())
 
 
-def urls_from_str(str):
-    """Find and return all URLs in a string."""
-    urlRegex = re.findall('[a-zA-Z]+?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
-    [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
-    return urlRegex
-
-
-def url_http_p(str):
-    """Return True or False depending on whether a URL is HTTP/s."""
-    urlRegex = re.search('^http[s]?', str)
-    return urlRegex
-
-
-def str_contains_url_p(str):
-    """Return True or False depending on whether a string contains a URL."""
-    if (len(urls_from_str(str)) > 0):
-        return True
-    else:
-        return False
-
-
-def url_malicious_p(url):
-    """Return True or False depending on whether a URL is malicious or not."""
-    r = requests.get("https://perceptual.apozy.com/host/{0}".format(url))
-    rjson = r.json()
-
-    # If there was an error with the API, we cannot guarantee anything
-    try:
-        rjson['error']
-        logging.warning("API error for URL %s", url)
-        return True
-    except KeyError:
-        pass
-
-    # If there is a corresponding traffic rank entry, the URL is well rated
-    try:
-        rjson['trafficRank']
-        return False
-    except KeyError:
-        logging.info("Traffic rank not available for URL %s", url)
-        return True
-
-
-def allow_url_p(url_object, server):
-    """Return True or False depending on whether a URL is to be ignored."""
-    query = session.query(AllowDomain).filter_by(
-        hostname=url_object.hostname,
-        server_id=server.id).first()
-    if query:
-        return True
-    else:
-        return False
-
-
 async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
     if message.author.bot:
         return
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
-        if (allow_url_p(url_object, message.guild)):
+        if (allow_url_p(session, url_object, message.guild)):
             logging.info("URL ignored: %s", url)
         elif (len(url) > max_url_length):
             await message.reply(
