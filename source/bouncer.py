@@ -1,6 +1,5 @@
 """Main entry point for the Interlock-Bouncer."""
 
-
 import configparser
 import logging
 import discord
@@ -24,9 +23,9 @@ max_url_length = configuration.getint('configuration', 'max_url_length')
 log_file = configuration.get('configuration', 'log_file')
 logging.basicConfig(filename=log_file, level=logging.INFO)
 
-# Get needed values from the configuration.ini file
+# Get the discord token from the  configuration.ini file
 token_from_config = configuration.get('discord', 'token')
-# Get the needed values from the environment variables
+# Get the discord token from the environment variable
 token_from_environment = os.getenv('DISCORD_TOKEN')
 
 # Set the token either by config or environment variable
@@ -58,6 +57,7 @@ async def on_ready():
 
 async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
+    # Ignore messages by bots
     if message.author.bot:
         return
     for url in urls_from_str(message.content):
