@@ -67,22 +67,19 @@ async def process_message(message):
         elif (len(url) > max_url_length):
             await message.reply(
                 content="Caution: message contains URLs which cannot be scanned! \n\
-**{0}:** `{1}`"
-                .format(message.author.name, message.content))
+**{0}:** `{1}`".format(message.author.name, message.content))
             await message.delete()
             break
         elif (not url_http_p(url)):
             await message.reply(
                 content="Caution: message contains URLs which cannot be scanned! \n\
-**{0}:** `{1}`"
-                .format(message.author.name, message.content))
+**{0}:** `{1}`".format(message.author.name, message.content))
             await message.delete()
             break
         elif (url_malicious_p(url)):
             await message.reply(
                 content="Caution: message may contain dangerous links! \n\
-**{0}:** `{1}`"
-                .format(message.author.name, message.content))
+**{0}:** `{1}`".format(message.author.name, message.content))
             await message.delete()
             logging.info("URL marked as insecure: %s", url)
             break
