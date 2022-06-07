@@ -8,7 +8,7 @@ import os
 from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model import AllowDomain
+from model import AllowDomain, Message
 from utility import urls_from_str
 from predicates import url_http_p, url_malicious_p, allow_url_p
 
@@ -87,7 +87,9 @@ async def process_message(message):
                 content="The following message posted in channel `{0}` \
 was deleted because Bouncer found a malicious link in it: `{1}`"
                 .format(message.channel, message.content))
-            logging.info("URL marked as insecure: %s", url)
+            logging.info("URL marked as insecure: %s. Message: %s", url, message.content)
+            session.add(Message(str(message.author.id), message.content, True))
+            session.commit()
             break
         # If we have made it to this point, URL is OK
         logging.info("URL marked as secure: %s", url)
