@@ -1,10 +1,10 @@
 """Models used by the Interlock-Bouncer bot."""
 
 import configparser
-
+import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, Boolean, Column, Text, create_engine
-
+from sqlalchemy.types import TIMESTAMP
 
 Base = declarative_base()
 
@@ -36,6 +36,7 @@ class Message(Base):
     author_id = Column(Text)
     message = Column(Text)
     malicious_p = Column(Boolean)
+    time = Column('timestamp', TIMESTAMP(timezone=False), nullable=False)
 
     def __init__(self, author_id, message, malicious_p):
         """Create a Message.
@@ -49,6 +50,7 @@ class Message(Base):
         self.author_id = author_id
         self.message = message
         self.malicious_p = malicious_p
+        self.time = datetime.datetime.now()
 
 
 if __name__ == '__main__':
