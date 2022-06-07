@@ -3,7 +3,7 @@
 import configparser
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, Column, Text, create_engine
+from sqlalchemy import Integer, Boolean, Column, Text, create_engine
 
 
 Base = declarative_base()
@@ -26,6 +26,29 @@ class AllowDomain(Base):
         """
         self.hostname = hostname
         self.server_id = server_id
+
+
+class Message(Base):
+    """This class represents a Discord message on a server."""
+
+    __tablename__ = 'messages'
+    id = Column(Integer, primary_key=True)
+    author_id = Column(Text)
+    message = Column(Text)
+    malicious_p = Column(Boolean)
+
+    def __init__(self, author_id, message, malicious_p):
+        """Create a Message.
+
+        :param author_id: The ID of the author.
+        :param message: The message.
+        :param malicious_p: Is the URL malicious?
+        :returns: nil
+
+        """
+        self.author_id = author_id
+        self.message = message
+        self.malicious_p = malicious_p
 
 
 if __name__ == '__main__':
