@@ -83,6 +83,10 @@ async def process_message(message):
                 content="Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`".format(message.author.name, message.content))
             await message.delete()
+            await message.author.send(
+                content="The following message posted in channel `{0}` \
+was deleted because Bouncer found a malicious link in it: `{1}`"
+                .format(message.channel, message.content))
             logging.info("URL marked as insecure: %s", url)
             break
         # If we have made it to this point, URL is OK
