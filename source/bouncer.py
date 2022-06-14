@@ -13,10 +13,8 @@ from model import AllowDomain, Message
 from utility import urls_from_str
 from predicates import url_http_p, url_malicious_p, allow_url_p
 
-# Setup gettext for i18n support
-en = gettext.translation('base', localedir='locales', languages=['en'])
-en.install()
-_ = en.gettext
+# Setup gettext for i18n
+_ = gettext.gettext
 
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
