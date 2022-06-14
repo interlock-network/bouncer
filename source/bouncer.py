@@ -1,6 +1,7 @@
 """Main entry point for the Interlock-Bouncer."""
 
 import configparser
+import gettext
 import logging
 import discord
 import os
@@ -11,6 +12,9 @@ from sqlalchemy.orm import sessionmaker
 from model import AllowDomain, Message
 from utility import urls_from_str
 from predicates import url_http_p, url_malicious_p, allow_url_p
+
+# Setup gettext for i18n
+_ = gettext.gettext
 
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
@@ -65,27 +69,27 @@ async def process_message(message):
         if (allow_url_p(session, url_object, message.guild)):
             logging.info("URL ignored: %s", url)
             await message.reply(
-                content="URL {0} marked safe by server owner.".format(url))
+                content=_("URL {0} marked safe by server owner.").format(url))
         elif (len(url) > max_url_length):
             await message.reply(
-                content="Caution: message contains URLs which cannot be scanned! \n\
-**{0}:** `{1}`".format(message.author.name, message.content))
+                content=_("Caution: message contains URLs which cannot be scanned! \n\
+**{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
             break
         elif (not url_http_p(url)):
             await message.reply(
-                content="Caution: message contains URLs which cannot be scanned! \n\
-**{0}:** `{1}`".format(message.author.name, message.content))
+                content=_("Caution: message contains URLs which cannot be scanned! \n\
+**{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
             break
         elif (url_malicious_p(url)):
             await message.reply(
-                content="Caution: message may contain dangerous links! \n\
-**{0}:** `{1}`".format(message.author.name, message.content))
+                content=_("Caution: message may contain dangerous links! \n\
+**{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
             await message.author.send(
-                content="The following message posted in channel `{0}` \
-was deleted because Bouncer found a malicious link in it: `{1}`"
+                content=_("The following message posted in channel `{0}` \
+was deleted because Bouncer found a malicious link in it: `{1}`")
                 .format(message.channel, message.content))
             logging.info("URL marked as insecure: %s. Message: %s", url, message.content)
             session.add(Message(str(message.author.id), message.content, True))
@@ -106,7 +110,8 @@ async def process_message_command(message):
             url_object = urlparse(url)
             session.add(AllowDomain(url_object.hostname, str(message.guild.id)))
         session.commit()
-        await message.channel.send(f"URLs {urls} added to allow list.")
+        await message.channel.send(_("URLs {} added to allow list.")
+                                   .format(urls))
         return True
     else:
         return False
