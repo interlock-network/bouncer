@@ -22,6 +22,7 @@ caution to keep your community safe.
 - Python 3.8
 - Python Discord.py
 - Python Requests
+- GNU gettext/xgettext (to update translation files)
 
 # Deployment instructions
 
@@ -53,6 +54,28 @@ token.
 1. Execute `nix-shell` in this repository's root.
 2. Execute `make run` in this repository's root.
 3. (Optional) utilize `GNU screen` to create a detachable session.
+
+# Updating the translations
+
+In order to update the translations it is necessary to scan all the
+appropriate Python files with `gettext` or `xgettext` to generate the
+appropriate `.po` files. An example of the command can be seen below:
+
+`xgettext -o locales/base.pot -L Python source/bouncer.py`
+
+after you create your `base.pot` file, you will need to create a
+directory in the following format for each language (example language, en):
+
+`locales/en/LC_MESSAGES/base.po` where you simply copy `base.pot` to
+`base.po`.
+
+After you have edited your translations and set your `CHARSET` in your
+`base.po` file, you'll need to compile it to machine code using `msgfmt`.
+
+To do so, navigate to `locales/en/LC_MESSAGES` and execute the
+following command:
+
+`msgfmt -o base.mo base`
 
 # Setting it up
 
