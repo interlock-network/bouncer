@@ -22,6 +22,7 @@ def str_contains_url_p(str):
         return False
 
 
+# TODO: Update to use the actual endpoint!
 def url_malicious_p(url):
     """Return True or False depending on whether a URL is malicious or not."""
     r = requests.get("https://perceptual.apozy.com/host/{0}".format(url))
