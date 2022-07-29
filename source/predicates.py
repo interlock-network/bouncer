@@ -1,11 +1,17 @@
 """Predicates."""
-
+import configparser
 import requests
 import re
 import logging
 
 from utility import urls_from_str
 from model import AllowDomain
+
+configuration = configparser.ConfigParser()
+configuration.read('configuration.ini')
+
+base_url = configuration.get('backend', 'base_url')
+api_key = configuration.get('backend', 'api_key')
 
 
 def url_http_p(str):
@@ -25,24 +31,14 @@ def str_contains_url_p(str):
 # TODO: Update to use the actual endpoint!
 def url_malicious_p(url):
     """Return True or False depending on whether a URL is malicious or not."""
-    r = requests.get("https://perceptual.apozy.com/host/{0}".format(url))
+    json_payload = {
+        "key": api_key,
+        "url": url
+    }
+
+    r = requests.post("{0}/malicious_p".format(base_url), json=json_payload)
     rjson = r.json()
-
-    # If there was an error with the API, we cannot guarantee anything
-    try:
-        rjson['error']
-        logging.warning("API error for URL %s", url)
-        return True
-    except KeyError:
-        pass
-
-    # If there is a corresponding traffic rank entry, the URL is well rated
-    try:
-        rjson['trafficRank']
-        return False
-    except KeyError:
-        logging.info("Traffic rank not available for URL %s", url)
-        return True
+    return rjson['malicious']
 
 
 def allow_url_p(session, url_object, server):
