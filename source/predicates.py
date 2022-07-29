@@ -2,7 +2,6 @@
 import configparser
 import requests
 import re
-import logging
 
 from utility import urls_from_str
 from model import AllowDomain
