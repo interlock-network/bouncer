@@ -1,4 +1,5 @@
 # Interlock-Bouncer
+
 Interlock-Bouncer is a Discord bot that scans your server for malicious
 links and neutralizes them. It does this by querying our database of
 known-malicious sites. If the site is new, we use our proprietary visual
@@ -8,14 +9,20 @@ and it begins protecting your server instantly.
 Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/),
 a web3 company that is decentralizing security. It's free to use in
 exchange for an occasional Interlock partnership post. In the future,
-Interlock-Bouncer will be powered by $INTR, Interlock's token launching
+Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching
 later this year.
 
+# Infrastructure
+
+Bouncer clients are run on AWS EC2 instances in the us-west-2 region. Each 
+Discord server gets their own client on their own EC2 instance. We spin up 
+these clients for each user.
+
 # Status
-Warning: The Interlock-Bouncer is in early alpha. The current
-implementation results in a high level of false positives (benign
-links marked as dangerous). In simpler terms, we err on the side of
-caution to keep your community safe.
+
+Warning: Interlock-Bouncer is in alpha. The current implementation results 
+in occasional false positives -- safe links marked as dangerous. In 
+simpler terms, we err on the side of caution to keep your community safe.
 
 # Dependencies:
 
