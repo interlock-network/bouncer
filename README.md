@@ -10,21 +10,14 @@ Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/),
 a web3 company that is decentralizing security. It's free to use in
 exchange for an occasional Interlock partnership post. In the future,
 Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching
-later this year.
-
-# Infrastructure
-
-Bouncer clients are run on AWS EC2 instances in the us-west-2 region. Each 
-Discord server gets their own client on their own EC2 instance. We spin up 
-these clients for each user.
+later this year. The repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) .
 
 # Status
 
 Warning: Interlock-Bouncer is in alpha. The current implementation results 
-in occasional false positives -- safe links marked as dangerous. In 
-simpler terms, we err on the side of caution to keep your community safe.
+in occasional false positives -- safe links marked as dangerous.
 
-# Dependencies:
+# Dependencies
 
 - Python 3.8
 - Python Discord.py
@@ -62,29 +55,7 @@ token.
 2. Execute `make run` in this repository's root.
 3. (Optional) utilize `GNU screen` to create a detachable session.
 
-# Updating the translations
-
-In order to update the translations it is necessary to scan all the
-appropriate Python files with `gettext` or `xgettext` to generate the
-appropriate `.po` files. An example of the command can be seen below:
-
-`xgettext -o locales/base.pot -L Python source/bouncer.py`
-
-after you create your `base.pot` file, you will need to create a
-directory in the following format for each language (example language, en):
-
-`locales/en/LC_MESSAGES/base.po` where you simply copy `base.pot` to
-`base.po`.
-
-After you have edited your translations and set your `CHARSET` in your
-`base.po` file, you'll need to compile it to machine code using `msgfmt`.
-
-To do so, navigate to `locales/en/LC_MESSAGES` and execute the
-following command:
-
-`msgfmt -o base.mo base`
-
-# Setting it up
+# Setup
 
 In order to set-up a bot, you have to do several processes within the
 Discord interface. The processes are explained and outlined at the
@@ -92,13 +63,12 @@ resource below.
 
 https://realpython.com/how-to-make-a-discord-bot-python/
 
-# Authorizing Interlock-Bouncer for your server
+# Authorizing for your server
 
-Visit the following URL to authorize Interlock-Bouncer to run on your own
-server:
-https://discord.com/api/oauth2/authorize?client_id=982020138352128070&permissions=534723951680&scope=bot
+Interlock-Bouncer is in beta. If you are a beta user, contact us for 
+the URL to authorize Interlock-Bouncer to run on your own server.
 
-# Testing Interlock-Bouncer
+# Testing
 
 To test if Interlock-Bouncer is working, post the following
 known-unsafe link in a channel Interlock-Bouncer is monitoring:
@@ -128,7 +98,7 @@ the allowlist. Allowlists are not shared between servers.
 
 # Flowchart
 
-The flowchart below will give you an idea of how Bouncer works.
+The flowchart below will give you an idea of how Interlock-Bouncer works.
 
 ```mermaid
 graph TD;
@@ -148,3 +118,39 @@ M --> O([Bouncer done])
 E --> O
 K --> E[Bouncer blocks URL by deleting original message <br> and posts new message alerting users]
 ```
+
+# Important files
+
+To understand what Interlock-Bouncer does in code, the best place to start is in `source/bouncer.py` .
+
+# Infrastructure
+
+Interlock-Bouncer clients are run on AWS EC2 instances in the us-west-2 region. Each 
+Discord server gets their own client on their own EC2 instance. We spin up 
+these clients for each user.
+
+# Updating the translations
+
+In order to update the translations it is necessary to scan all the
+appropriate Python files with `gettext` or `xgettext` to generate the
+appropriate `.po` files. An example of the command can be seen below:
+
+`xgettext -o locales/base.pot -L Python source/bouncer.py`
+
+after you create your `base.pot` file, you will need to create a
+directory in the following format for each language (example language, en):
+
+`locales/en/LC_MESSAGES/base.po` where you simply copy `base.pot` to
+`base.po`.
+
+After you have edited your translations and set your `CHARSET` in your
+`base.po` file, you'll need to compile it to machine code using `msgfmt`.
+
+To do so, navigate to `locales/en/LC_MESSAGES` and execute the
+following command:
+
+`msgfmt -o base.mo base`
+
+# Maintainer
+
+The maintainer for Interlock-Bouncer is [@jmercouris](https://github.com/jmercouris).
