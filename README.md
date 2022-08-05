@@ -1,20 +1,14 @@
 # Interlock-Bouncer
 
-Interlock-Bouncer is a Discord bot that scans your server for malicious
-links and neutralizes them. It does this by querying our database of
-known-malicious sites. If the site is new, we use our proprietary visual
-AI to identify 0-day phishing sites. Setup takes just a minute or two
-and it begins protecting your server instantly.
+<img src="./bouncer_975x975.jpg" align="right" width="250" height="250"/>
 
-Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/),
-a web3 company that is decentralizing security. It's free to use in
-exchange for an occasional Interlock partnership post. In the future,
-Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching
-later this year. The repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) .
+Interlock-Bouncer is a Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
+
+Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security. It's free to use in exchange for an occasional Interlock partnership post. In the future, Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching later this year. The repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) .
 
 # Status
 
-Warning: Interlock-Bouncer is in alpha. The current implementation results 
+Warning: Interlock-Bouncer is in alpha. The current implementation results
 in occasional false positives -- safe links marked as dangerous.
 
 # Dependencies
@@ -65,7 +59,7 @@ https://realpython.com/how-to-make-a-discord-bot-python/
 
 # Authorizing for your server
 
-Interlock-Bouncer is in beta. If you are a beta user, contact us for 
+Interlock-Bouncer is in beta. If you are a beta user, contact us for
 the URL to authorize Interlock-Bouncer to run on your own server.
 
 # Testing
@@ -84,7 +78,6 @@ Message contains dangerous links! NAME: http://phishing.com
 Here's a screenshot of the expected behavior:
 
 <img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="reaction.png">
-
 
 # Adding to the allowlist
 
@@ -113,7 +106,7 @@ H --> K[BE sends unsafe]
 I -.-> |Yes|J[BE sends safe]
 I -.-> |No|K
 P -.- |Yes|H[URL known unsafe]
-J --> M[Bouncer leaves message untouched] 
+J --> M[Bouncer leaves message untouched]
 M --> O([Bouncer done])
 E --> O
 K --> E[Bouncer blocks URL by deleting original message <br> and posts new message alerting users]
@@ -125,8 +118,8 @@ To understand what Interlock-Bouncer does in code, the best place to start is in
 
 # Infrastructure
 
-Interlock-Bouncer clients are run on AWS EC2 instances in the us-west-2 region. Each 
-Discord server gets their own client on their own EC2 instance. We spin up 
+Interlock-Bouncer clients are run on AWS EC2 instances in the us-west-2 region. Each
+Discord server gets their own client on their own EC2 instance. We spin up
 these clients for each user.
 
 # Updating the translations
