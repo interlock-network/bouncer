@@ -66,7 +66,7 @@ async def process_message(message):
         if (allow_url_p(session, url_object, message.guild)):
             logging.info("URL ignored: %s", url)
             await message.reply(
-                content=_("URL `{0}` marked safe by server owner.").format(url))
+                content=_("URL `{0}` marked safe by server moderator.").format(url))
         elif (len(url) > max_url_length):
             await message.reply(
                 content=_("Caution: message contains URLs which cannot be scanned! \n\
