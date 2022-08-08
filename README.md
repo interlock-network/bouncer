@@ -1,6 +1,6 @@
 # Interlock-Bouncer
 
-<img src="./bouncer_975x975.jpg" align="right" width="250" height="250"/>
+<img src="./bouncer-dark.png" align="right" width="250" height="250"/>
 
 Interlock-Bouncer is a Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
