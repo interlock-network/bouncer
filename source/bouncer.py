@@ -108,7 +108,7 @@ async def process_message_command(message):
             session.add(AllowDomain(url_object.hostname,
                                     str(message.guild.id)))
         session.commit()
-        await message.channel.send(_("URLs {} added to allow list.")
+        await message.channel.send(_("URLs `{}` added to allow list.")
                                    .format(urls))
         return True
     elif (message.content.lower().startswith('!unallow_domains')):
@@ -119,7 +119,7 @@ async def process_message_command(message):
                 hostname=url_object.hostname,
                 server_id=message.guild.id).delete()
         session.commit()
-        await message.channel.send(_("URLs {} removed from allow list.")
+        await message.channel.send(_("URLs `{}` removed from allow list.")
                                    .format(urls))
         return True
     else:
