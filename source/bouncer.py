@@ -61,9 +61,6 @@ async def on_ready():
 
 async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
-    # Ignore messages by bots
-    if message.author.bot:
-        return
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
@@ -120,6 +117,8 @@ async def process_message_command(message):
 @client.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
+    if message.author.bot:
+        return
     if (not await process_message_command(message)):
         await process_message(message)
 
@@ -127,6 +126,8 @@ async def on_message(message):
 @client.event
 async def on_message_edit(message_before, message_after):
     """Invoke when a message is edited on the Guild/server."""
+    if message_before.author.bot or message_after.author.bot:
+        return
     await process_message(message_after)
 
 if __name__ == '__main__':
