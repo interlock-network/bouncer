@@ -105,7 +105,8 @@ async def process_message_command(message):
         urls = urls_from_str(message.content)
         for url in urls:
             url_object = urlparse(url)
-            session.add(AllowDomain(url_object.hostname, str(message.guild.id)))
+            session.add(AllowDomain(url_object.hostname,
+                                    str(message.guild.id)))
         session.commit()
         await message.channel.send(_("URLs {} added to allow list.")
                                    .format(urls))
