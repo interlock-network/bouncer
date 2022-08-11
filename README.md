@@ -1,5 +1,3 @@
-<!-- @format -->
-
 # Interlock-Bouncer
 
 <img src="./bouncer-dark.png" align="right" width="250" height="250"/>

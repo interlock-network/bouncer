@@ -1,13 +1,10 @@
-<!-- @format -->
+<img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250" style="padding: 1rem"/>
 
-<img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="100" height="100" style="padding: 1rem"/>
-<!-- @format -->
-
-# Interlock-Bouncer FAQ
+# Bouncer FAQ
 
 ### What is Bouncer? How does it work?
 
-Interlock-Bouncer is an open-source Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
+Interlock-Bouncer is an [open-source](https://github.com/interlock-network/interlock-bouncer) Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
 ### Who makes Bouncer?
 
@@ -15,7 +12,7 @@ Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/), a
 
 ### Is Bouncer in beta?
 
-It's actually in alpha. That means it is not feature complete and is still buggy. The main challenge now is a relatively high number of false positives -- safe sites incorrectly categorized as unsafe.
+It's actually in alpha. That means it is not feature complete and still buggy. The main challenge now is a relatively high number of false positives -- safe sites incorrectly categorized as unsafe.
 
 ### How much does Bouncer cost?
 
@@ -23,11 +20,11 @@ While in testing, Bouncer is free to use in exchange for an occasional Interlock
 
 ### Where can I see the source code?
 
-The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) . The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
+The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer). The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
 
 ### Do I have to install any software to get Bouncer running?
 
-No! Interlock-Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
+Nope! Interlock-Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
 
 ### How can I get Bouncer for my Discord server?
 
