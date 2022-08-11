@@ -1,27 +1,51 @@
 <!-- @format -->
 
-# Interlock-Bouncer
+<img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="100" height="100" style="padding: 1rem"/>
+<!-- @format -->
 
-<img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250"/>
+# Interlock-Bouncer FAQ
 
-Interlock-Bouncer is a Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
+### What is Bouncer? How does it work?
 
-Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security. It's free to use in exchange for an occasional Interlock partnership post. In the future, Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching later this year. The repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) .
+Interlock-Bouncer is an open-source Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
-# Status
+### Who makes Bouncer?
 
-Warning: Interlock-Bouncer is in alpha. The current implementation results
-in occasional false positives -- safe links marked as dangerous.
+Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security.
 
-# Authorizing for your server
+### Is Bouncer in beta?
 
-Interlock-Bouncer is in beta. If you are a beta user, contact us for
-the URL to authorize Interlock-Bouncer to run on your own server.
+It's actually in alpha. That means it is not feature complete and is still buggy. The main challenge now is a relatively high number of false positives -- safe sites incorrectly categorized as unsafe.
 
-# Testing
+### How much does Bouncer cost?
 
-To test if Interlock-Bouncer is working, post the following
-known-unsafe link in a channel Interlock-Bouncer is monitoring:
+While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching later this year.
+
+### Where can I see the source code?
+
+The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer) . The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
+
+### Do I have to install any software to get Bouncer running?
+
+No! Interlock-Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
+
+### How can I get Bouncer for my Discord server?
+
+To get Bouncer for your server, email dan@interlock.network. You can also message Magnitude on the [Interlock Discord](https://discord.gg/ezraXYD8).
+
+### How do I get Bouncer to protect a channel?
+
+First, click on settings for the channel.
+
+<img width="421" alt="Clicking on a channel's settings" src="edit_channel.png">
+
+Then, invite Bouncer to the channel and give it Admin access. That's so Bouncer can delete unsafe messages and do what it needs to protect the channel.
+
+<img width="421" alt="Invite Bouncer to the channel" src="invite.png">
+
+### I've installed Bouncer! How can I make sure it's working as expected?
+
+Post the following known-unsafe link in a channel Interlock-Bouncer is monitoring:
 `http://phishing.com`
 
 Your message should immediately be deleted and Interlock-Bouncer
@@ -35,7 +59,7 @@ Here's a screenshot of the expected behavior:
 
 <img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="screenshot.png">
 
-# Adding to the allowlist
+### What's an allowlist? How can I add to my server's allowlist?
 
 The allowlist is a set of URLs that are marked as safe by a server. In
 order to add an element to the allowlist invoke the following command:
@@ -45,20 +69,12 @@ order to add an element to the allowlist invoke the following command:
 where `url1.com` and `url2.com` represent URLs that you wish to add to
 the allowlist. Allowlists are not shared between servers.
 
-# Flowchart
+### How can I remove URLs from the allowlist?
 
-The flowchart below will give you an idea of how Interlock-Bouncer works.
+Simply type `!unallow_domains url1.com` to remove just `url1.com` from the allowlist.
+
+### Can you show me a flowchart of how Bouncer works?
+
+I'm glad you asked. The flowchart below will give you an idea of how Interlock-Bouncer works.
 
 <img width="421" alt="Flowchart of how Bouncer works" src="flowchart.png">
-
-# Important files
-
-To understand what Interlock-Bouncer does in code, the best place to start is in `source/bouncer.py` .
-
-# Infrastructure
-
-Interlock-Bouncer clients are run on AWS EC2 instances in the us-west-2 region.
-
-# Maintainer
-
-The maintainer for Interlock-Bouncer is [@jmercouris](https://github.com/jmercouris).
