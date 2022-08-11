@@ -2,7 +2,7 @@
 
 # Interlock-Bouncer
 
-<img src="./bouncer-dark.png" align="right" width="250" height="250"/>
+<img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250"/>
 
 Interlock-Bouncer is a Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
@@ -49,24 +49,7 @@ the allowlist. Allowlists are not shared between servers.
 
 The flowchart below will give you an idea of how Interlock-Bouncer works.
 
-```mermaid
-graph TD;
-A([Bouncer detects message with a URL]) --> B{Is URL allowlisted by guild owner?}
-B --> |Yes|M[Bouncer leaves message untouched]
-B -.- |No|F["Bouncer sends URL to backend (BE)"]
-F --> P{Is URL listed in BE?}
-P -.- |Yes|G[URL known safe]
-P -.- |No|I{Is URL found safe through visual AI?}
-G --> J[BE sends safe]
-H --> K[BE sends unsafe]
-I -.-> |Yes|J[BE sends safe]
-I -.-> |No|K
-P -.- |Yes|H[URL known unsafe]
-J --> M[Bouncer leaves message untouched]
-M --> O([Bouncer done])
-E --> O
-K --> E[Bouncer blocks URL by deleting original message <br> and posts new message alerting users]
-```
+<img width="421" alt="Flowchart of how Bouncer works" src="flowchart.png">
 
 # Important files
 
