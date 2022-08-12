@@ -7,10 +7,8 @@ import discord
 import os
 
 from urllib.parse import urlparse
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from model import AllowDomain, Message, Channel
-from utility import urls_from_str
+from utility import urls_from_str, session
 from predicates import url_http_p, url_malicious_p, allow_url_p
 
 # Setup gettext for i18n
@@ -40,11 +38,6 @@ if (token_from_config and token_from_environment and
     logging.warning("Different Discord token set via configuration.ini file \
 AND environment variable! Prioritizing token from configuration.ini.")
 
-# Setup the SQLAlchemy session
-sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
-engine = create_engine(sqlalchemy_url, echo=True, future=True)
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 # Create a discord client
 client = discord.Client()
@@ -66,7 +59,8 @@ async def process_message(message):
         if (allow_url_p(session, url_object, message.guild)):
             logging.info("URL ignored: %s", url)
             await message.reply(
-                content=_("URL `{0}` marked safe by server moderator.").format(url))
+                content=_("URL `{0}` marked safe by server moderator.")
+                .format(url))
             break
         elif (len(url) > max_url_length):
             await message.reply(
@@ -85,7 +79,8 @@ async def process_message(message):
                 content=_("Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logging.info("URL marked as insecure: %s. Message: %s", url, message.content)
+            logging.info("URL marked as insecure: %s. Message: %s",
+                         url, message.content)
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
