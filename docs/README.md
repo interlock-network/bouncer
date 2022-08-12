@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <img src="./bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250" style="padding: 1rem"/>
 
 # Bouncer FAQ
@@ -8,7 +10,7 @@ Interlock-Bouncer is an [open-source](https://github.com/interlock-network/inter
 
 ### Who makes Bouncer?
 
-Interlock-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security.
+Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security.
 
 ### Is Bouncer in beta?
 
@@ -16,7 +18,7 @@ It's actually in alpha. That means it is not feature complete and still buggy. T
 
 ### How much does Bouncer cost?
 
-While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Interlock-Bouncer will be powered by $ILOCK, Interlock's token launching later this year.
+While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Bouncer will be powered by $ILOCK, Interlock's token launching later this year.
 
 ### Where can I see the source code?
 
@@ -24,7 +26,7 @@ The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](
 
 ### Do I have to install any software to get Bouncer running?
 
-Nope! Interlock-Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
+Nope! Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
 
 ### How can I get Bouncer for my Discord server?
 
@@ -42,10 +44,10 @@ Then, invite Bouncer to the channel and give it Admin access. That's so Bouncer 
 
 ### I've installed Bouncer! How can I make sure it's working as expected?
 
-Post the following known-unsafe link in a channel Interlock-Bouncer is monitoring:
+Post the following known-unsafe link in a channel Bouncer is monitoring:
 `http://phishing.com`
 
-Your message should immediately be deleted and Interlock-Bouncer
+Your message should immediately be deleted and Bouncer
 should post the following:
 
 ```
@@ -72,6 +74,6 @@ Simply type `!unallow_domains url1.com` to remove just `url1.com` from the allow
 
 ### Can you show me a flowchart of how Bouncer works?
 
-I'm glad you asked. The flowchart below will give you an idea of how Interlock-Bouncer works.
+I'm glad you asked. The flowchart below will give you an idea of how Bouncer works.
 
 <img width="421" alt="Flowchart of how Bouncer works" src="flowchart.png">

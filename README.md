@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Interlock-Bouncer
 
 <img src="./bouncer-dark.png" align="right" width="250" height="250"/>
@@ -8,33 +10,33 @@ database of known-malicious sites. If the site is new, we use our
 proprietary visual AI to identify 0-day phishing sites. Setup takes
 just a minute or two and it begins protecting your server instantly.
 
-Interlock-Bouncer is a project of
-[Interlock](https://www.interlock.network/), a web3 company that is
+Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is
 decentralizing security. It's free to use in exchange for an
 occasional Interlock partnership post. In the future,
-Interlock-Bouncer will be powered by $ILOCK, Interlock's token
+Bouncer will be powered by $ILOCK, Interlock's token
 launching later this year. The repo is at
-[https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer)
-.
+[https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer).
+
+You can check out our [FAQ](https://interlock-network.github.io/interlock-bouncer/) for more information.
 
 # Status
 
-Warning: Interlock-Bouncer is in alpha. The current implementation results
-in occasional false positives -- safe links marked as dangerous.
+Bouncer is in alpha. It occasionally shows false positives -- safe links marked as dangerous.
+We're also adding new features all the time.
 
 # Authorizing for your server
 
-Interlock-Bouncer is in beta. If you are a beta user, contact us for
-the URL to authorize Interlock-Bouncer to run on your own server.
+If you are an alpha user, contact us for the URL to authorize Bouncer to run on your own server.
+
+Not yet an alpha user? Contact Magnitude on our [Discord server](https://discord.gg/ezraXYD8) and let's talk!
 
 # Testing
 
-To test if Interlock-Bouncer is working, post the following
-known-unsafe link in a channel Interlock-Bouncer is monitoring:
+To test if Bouncer is working, post the following
+known-unsafe link in a channel Bouncer is monitoring:
 `http://phishing.com`
 
-Your message should immediately be deleted and Interlock-Bouncer
-should post the following:
+Your message should immediately be deleted and Bouncer should post the following:
 
 ```
 Message contains dangerous links! NAME: http://phishing.com
@@ -56,7 +58,7 @@ the allowlist. Allowlists are not shared between servers.
 
 # Flowchart
 
-The flowchart below will give you an idea of how Interlock-Bouncer works.
+The flowchart below will give you an idea of how Bouncer works.
 
 ```mermaid
 graph TD;
@@ -79,12 +81,12 @@ K --> E[Bouncer blocks URL by deleting original message <br> and posts new messa
 
 # Important files
 
-To understand what Interlock-Bouncer does in code, the best place to start is in `source/bouncer.py` .
+To understand what Bouncer does in code, the best place to start is in `source/bouncer.py` .
 
 # Infrastructure
 
-Interlock-Bouncer clients are run on AWS EC2 instances in the us-west-2 region.
+Bouncer clients are run on AWS EC2 instances in the us-west-2 region.
 
 # Maintainer
 
-The maintainer for Interlock-Bouncer is [@jmercouris](https://github.com/jmercouris).
+The maintainer for Bouncer is [@jmercouris](https://github.com/jmercouris).
