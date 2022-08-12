@@ -7,10 +7,11 @@ import discord
 import os
 
 from urllib.parse import urlparse
-from model import AllowDomain, Message
+from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
 from utility import urls_from_str, session
-from predicates import url_http_p, url_malicious_p, allow_url_p
+from predicates import (url_http_p, url_malicious_p, allow_url_p,
+                        str_contains_url_p)
 
 # Setup gettext for i18n
 _ = gettext.gettext
@@ -55,6 +56,14 @@ async def on_ready():
 
 async def process_message(message):
     """Handle a message, deleting or stripping it of links."""
+    channel = session.query(Channel).filter_by(
+        channel_id=message.channel.id,
+        server_id=message.guild.id).first()
+    if channel.block_links_p and str_contains_url_p(message.content):
+        await message.reply(content=_("Mods have set this channel to have no links from users."))
+        await message.delete()
+        return
+
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
