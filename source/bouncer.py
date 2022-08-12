@@ -7,7 +7,7 @@ import discord
 import os
 
 from urllib.parse import urlparse
-from model import AllowDomain, Message, Channel
+from model import AllowDomain, Message
 from model import find_or_create_channel
 from utility import urls_from_str, session
 from predicates import url_http_p, url_malicious_p, allow_url_p
