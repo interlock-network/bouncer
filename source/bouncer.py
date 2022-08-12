@@ -9,7 +9,7 @@ import os
 from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model import AllowDomain, Message
+from model import AllowDomain, Message, Channel
 from utility import urls_from_str
 from predicates import url_http_p, url_malicious_p, allow_url_p
 
@@ -120,10 +120,20 @@ async def process_message_command(message):
                                    .format(urls))
         return True
     elif (message.content.lower().startswith('!block_links')):
-        # TODO:
+        channel = session.query(Channel).filter_by(
+            channel_id=message.channel.id,
+            server_id=message.guild.id).first()
+        channel.block_links_p = True
+        session.commit()
+        await message.channel.send("URLs now blocked on this channel.")
         return True
     elif (message.content.lower().startswith('!unblock_links')):
-        # TODO:
+        channel = session.query(Channel).filter_by(
+            channel_id=message.channel.id,
+            server_id=message.guild.id).first()
+        channel.block_links_p = False
+        session.commit()
+        await message.channel.send("URLs now allowed on this channel.")
         return True
     else:
         return False
