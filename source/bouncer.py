@@ -59,7 +59,7 @@ async def process_message(message):
     channel = session.query(Channel).filter_by(
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
-    if channel.block_links_p and str_contains_url_p(message.content):
+    if channel and channel.block_links_p and str_contains_url_p(message.content):
         await message.reply(content=_("Mods have set this channel to have no links from users."))
         await message.delete()
         return
