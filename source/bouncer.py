@@ -119,6 +119,12 @@ async def process_message_command(message):
         await message.channel.send(_("URLs `{}` removed from allow list.")
                                    .format(urls))
         return True
+    elif (message.content.lower().startswith('!block_links')):
+        # TODO:
+        return True
+    elif (message.content.lower().startswith('!unblock_links')):
+        # TODO:
+        return True
     else:
         return False
 
