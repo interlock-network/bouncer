@@ -5,6 +5,7 @@ import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, Boolean, Column, Text, create_engine
 from sqlalchemy.types import TIMESTAMP
+from utility import session
 
 Base = declarative_base()
 
@@ -27,6 +28,17 @@ class Channel(Base):
         """
         self.channel_id = channel_id
         self.server_id = server_id
+
+
+def find_or_create_channel(channel_id, server_id):
+    """Find or create channel."""
+    channel = session.query(Channel).filter_by(
+        channel_id=channel_id,
+        server_id=server_id).first()
+    if channel:
+        return channel
+    else:
+        return Channel(channel_id, server_id)
 
 
 class AllowDomain(Base):
