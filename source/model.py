@@ -38,7 +38,9 @@ def find_or_create_channel(channel_id, server_id):
     if channel:
         return channel
     else:
-        return Channel(channel_id, server_id)
+        channel = Channel(channel_id, server_id)
+        session.add(channel)
+        return channel
 
 
 class AllowDomain(Base):
