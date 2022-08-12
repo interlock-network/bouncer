@@ -8,6 +8,7 @@ import os
 
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
+from model import find_or_create_channel
 from utility import urls_from_str, session
 from predicates import url_http_p, url_malicious_p, allow_url_p
 
@@ -115,17 +116,13 @@ async def process_message_command(message):
                                    .format(urls))
         return True
     elif (message.content.lower().startswith('!block_links')):
-        channel = session.query(Channel).filter_by(
-            channel_id=message.channel.id,
-            server_id=message.guild.id).first()
+        channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = True
         session.commit()
         await message.channel.send("URLs now blocked on this channel.")
         return True
     elif (message.content.lower().startswith('!unblock_links')):
-        channel = session.query(Channel).filter_by(
-            channel_id=message.channel.id,
-            server_id=message.guild.id).first()
+        channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = False
         session.commit()
         await message.channel.send("URLs now allowed on this channel.")
