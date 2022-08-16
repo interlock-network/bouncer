@@ -3,13 +3,11 @@
 import configparser
 import gettext
 import logging
-import discord
-import os
 
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import urls_from_str, session
+from utility import urls_from_str, session, client
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -30,24 +28,6 @@ logging.basicConfig(filename=log_file, level=logging.INFO)
 discord_logger = DiscordLogger()
 logger = logging.getLogger()
 logger.addHandler(discord_logger)
-
-
-# Get the discord token from the  configuration.ini file
-token_from_config = configuration.get('discord', 'token')
-# Get the discord token from the environment variable
-token_from_environment = os.getenv('DISCORD_TOKEN')
-
-# Set the token either by config or environment variable
-token = token_from_config or token_from_environment
-
-if (token_from_config and token_from_environment and
-   token_from_config != token_from_environment):
-    logging.warning("Different Discord token set via configuration.ini file \
-AND environment variable! Prioritizing token from configuration.ini.")
-
-
-# Create a discord client
-client = discord.Client()
 
 
 @client.event

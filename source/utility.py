@@ -1,9 +1,12 @@
 """Utility functions."""
 
+import logging
 import re
 import configparser
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import discord
+import os
 
 
 def urls_from_str(str):
@@ -22,3 +25,19 @@ sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
 engine = create_engine(sqlalchemy_url, echo=True, future=True)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# Get the discord token from the configuration.ini file
+token_from_config = configuration.get('discord', 'token')
+# Get the discord token from the environment variable
+token_from_environment = os.getenv('DISCORD_TOKEN')
+
+# Set the token either by config or environment variable
+token = token_from_config or token_from_environment
+
+if (token_from_config and token_from_environment and
+   token_from_config != token_from_environment):
+    logging.warning("Different Discord token set via configuration.ini file \
+AND environment variable! Prioritizing token from configuration.ini.")
+
+# Create a discord client
+client = discord.Client()
