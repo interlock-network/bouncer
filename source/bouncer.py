@@ -19,7 +19,7 @@ _ = gettext.gettext
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
-# Max URL length (from issue #28)
+# Max URL length
 max_url_length = configuration.getint('configuration', 'max_url_length')
 
 # Set the logging up
