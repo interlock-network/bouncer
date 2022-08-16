@@ -6,4 +6,7 @@ import logging
 class DiscordLogger(logging.Handler):
     """This class is responsible for logging to Discord."""
 
-    pass
+    def emit(self, record):
+        """Invoke when a log is to be logged."""
+        msg = self.format(record)
+        print(msg)
