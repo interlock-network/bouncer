@@ -12,6 +12,7 @@ from model import find_or_create_channel
 from utility import urls_from_str, session
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
+from discord_logger import DiscordLogger
 
 # Setup gettext for i18n
 _ = gettext.gettext
@@ -26,6 +27,10 @@ max_url_length = configuration.getint('configuration', 'max_url_length')
 # Set the logging up
 log_file = configuration.get('configuration', 'log_file')
 logging.basicConfig(filename=log_file, level=logging.INFO)
+discord_logger = DiscordLogger()
+logger = logging.getLogger()
+logger.addHandler(discord_logger)
+
 
 # Get the discord token from the  configuration.ini file
 token_from_config = configuration.get('discord', 'token')
