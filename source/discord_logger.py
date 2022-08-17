@@ -24,5 +24,5 @@ class DiscordLogger(logging.Handler):
     def emit(self, record):
         """Invoke when a log is to be logged."""
         msg = self.format(record)
-        print(self.log_channels())
-        print(msg)
+        for channel in self.log_channels():
+            await channel.send(msg)
