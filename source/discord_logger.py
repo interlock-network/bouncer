@@ -1,5 +1,6 @@
 """This module provides a function to log to a Discord channel."""
 
+import asyncio
 import logging
 from utility import client
 from utility import configuration
@@ -25,4 +26,4 @@ class DiscordLogger(logging.Handler):
         """Invoke when a log is to be logged."""
         msg = self.format(record)
         for channel in self.log_channels():
-            await channel.send(msg)
+            asyncio.create_task(channel.send(msg))
