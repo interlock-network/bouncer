@@ -24,3 +24,11 @@ This version is the minimum viable Discord bot, with the following features:
 - Admins can add to allowlist
 - Logging for URLs scanned and percent malicious
 - Backend leverages blockhashing to scan novel URLs
+
+#### DONE 1.1.0
+
+Some quality of life improvements:
+
+- Bouncer logs all its actions to a channel
+- Can block all URLs from a channel (and undo it)
+- Can remove URLs from allowlist
