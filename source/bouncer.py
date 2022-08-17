@@ -1,23 +1,18 @@
 """Main entry point for the Interlock-Bouncer."""
 
-import configparser
 import gettext
 import logging
 
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import urls_from_str, session, client, token
+from utility import urls_from_str, session, client, token, configuration
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
 
 # Setup gettext for i18n
 _ = gettext.gettext
-
-# Parse the configuration.ini file in the repository root
-configuration = configparser.ConfigParser()
-configuration.read('configuration.ini')
 
 # Max URL length
 max_url_length = configuration.getint('configuration', 'max_url_length')

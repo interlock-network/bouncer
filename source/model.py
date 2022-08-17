@@ -1,11 +1,10 @@
 """Models used by the Interlock-Bouncer bot."""
 
-import configparser
 import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, Boolean, Column, Text, create_engine
 from sqlalchemy.types import TIMESTAMP
-from utility import session
+from utility import session, configuration
 
 Base = declarative_base()
 
@@ -89,9 +88,7 @@ class Message(Base):
 
 if __name__ == '__main__':
     # Create the database
-    configuration = configparser.ConfigParser()
     configuration.read('configuration.ini')
-
     sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
     engine = create_engine(sqlalchemy_url, echo=True, future=True)
     Base.metadata.create_all(engine)
