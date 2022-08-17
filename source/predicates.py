@@ -1,13 +1,10 @@
 """Predicates."""
-import configparser
+from utility import configuration
 import requests
 import re
 
 from utility import urls_from_str
 from model import AllowDomain
-
-configuration = configparser.ConfigParser()
-configuration.read('configuration.ini')
 
 base_url = configuration.get('backend', 'base_url')
 api_key = configuration.get('backend', 'api_key')
