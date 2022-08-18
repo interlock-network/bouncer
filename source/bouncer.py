@@ -47,6 +47,10 @@ async def process_message(message):
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
     if channel and channel.block_links_p and str_contains_url_p(message.content):
+        logging.info("User `%s` posted message `%s` in nolink channel `%s`.",
+                     message.author.name,
+                     message.content,
+                     message.channel.name)
         await message.reply(content=_("Mods have set this channel to have no links from users."))
         await message.delete()
         return
@@ -117,13 +121,18 @@ async def process_message_command(message):
         channel.block_links_p = True
         session.commit()
         await message.channel.send("URLs now blocked on this channel.")
+        logging.info("URLS disabled for channel `%s` by `%s`.",
+                     message.channel.name,
+                     message.author.name)
         return True
     elif (message.content.lower().startswith('!unblock_links')):
         channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = False
         session.commit()
         await message.channel.send("URLs now allowed on this channel.")
-        logging.info("URLS enabled for channel `%s`", message.channel.name)
+        logging.info("URLS enabled for channel `%s` by `%s`.",
+                     message.channel.name,
+                     message.author.name)
         return True
     else:
         return False
