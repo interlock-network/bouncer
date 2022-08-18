@@ -19,7 +19,7 @@ max_url_length = configuration.getint('configuration', 'max_url_length')
 
 # Set the logging up
 log_file = configuration.get('configuration', 'log_file')
-logging.basicConfig(filename=log_file, level=logging.INFO)
+logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
 discord_logger = DiscordLogger()
 discord_logger.setLevel(logging.DEBUG)
