@@ -20,9 +20,16 @@ max_url_length = configuration.getint('configuration', 'max_url_length')
 # Set the logging up
 log_file = configuration.get('configuration', 'log_file')
 logging.basicConfig(filename=log_file, level=logging.INFO)
+
 discord_logger = DiscordLogger()
+discord_logger.setLevel(logging.DEBUG)
+
+friendly_discord_logger = DiscordLogger(channel="bouncer-admin-log")
+friendly_discord_logger.setLevel(logging.INFO)
+
 logger = logging.getLogger()
 logger.addHandler(discord_logger)
+logger.addHandler(friendly_discord_logger)
 
 
 @client.event
@@ -63,6 +70,7 @@ async def process_message(message):
                 content=_("Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
+            logging.info("Ignoring URL %s because it is not HTTP/s", url)
             break
         elif (url_malicious_p(url)):
             await message.reply(
@@ -115,6 +123,7 @@ async def process_message_command(message):
         channel.block_links_p = False
         session.commit()
         await message.channel.send("URLs now allowed on this channel.")
+        logging.info("URLS enabled for channel `%s`", message.channel.name)
         return True
     else:
         return False
