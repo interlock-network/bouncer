@@ -22,7 +22,7 @@ configuration.read('configuration.ini')
 
 # Setup the SQLAlchemy session
 sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
-engine = create_engine(sqlalchemy_url, echo=True, future=True)
+engine = create_engine(sqlalchemy_url, echo=False, future=True)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
