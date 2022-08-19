@@ -58,6 +58,30 @@ Here's a screenshot of the expected behavior:
 
 <img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="screenshot.png">
 
+### Where can I see Bouncer's actions?
+
+Bouncer logs its activity to the channel "#bouncer-log". There you can see when:
+
+- Bouncer deletes a malicious URL, complete with:
+  - Username of who posted the URL
+  - Channel it was posted in
+  - The malicious URL
+  - The message it was in (for context)
+- A mod adds to an allowlist (or removes from one)
+  - And mod name
+- A mod blocks all URLs from a channel (or vice versa)
+  - And mod name
+
+### How can I block all links in a channel?
+
+To block all URLs in a channel, do this:
+
+`!block_links`
+
+To cancel this action and allow URLs again in a channel, do this:
+
+`!unblock_links`
+
 ### What's an allowlist? How can I add to my server's allowlist?
 
 The allowlist is a set of URLs that are marked as safe by a server. In
