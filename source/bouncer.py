@@ -24,7 +24,7 @@ logging.basicConfig(filename=log_file, level=logging.DEBUG)
 discord_logger = DiscordLogger()
 discord_logger.setLevel(logging.DEBUG)
 
-friendly_discord_logger = DiscordLogger(channel="bouncer-admin-log")
+friendly_discord_logger = DiscordLogger(channel="bouncer-log")
 friendly_discord_logger.setLevel(logging.INFO)
 
 logger = logging.getLogger()
