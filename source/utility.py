@@ -40,4 +40,5 @@ if (token_from_config and token_from_environment and
 AND environment variable! Prioritizing token from configuration.ini.")
 
 # Create a discord client
-client = discord.Client()
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
