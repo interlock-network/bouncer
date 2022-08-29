@@ -1,8 +1,6 @@
 # Dependencies
 
 - Python 3.8
-- Python Discord.py
-- Python Requests
 - GNU gettext/xgettext (to update translation files)
 
 # Deployment instructions
