@@ -125,7 +125,7 @@ async def process_message_command(message):
         channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = False
         session.commit()
-        logger.log(MESSAGE, "URLS enabled for channel `%s` by `%s`.",
+        logger.log(MESSAGE, "URLs enabled for channel `%s` by `%s`.",
                    message.channel.name,
                    message.author.name)
         await message.channel.send("URLs now allowed on this channel.")
