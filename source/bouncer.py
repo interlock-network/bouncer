@@ -6,7 +6,7 @@ import logging
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import urls_from_str, session, client, token, configuration
+from utility import urls_from_str, session, client, token, configuration, MESSAGE
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -18,18 +18,12 @@ _ = gettext.gettext
 max_url_length = configuration.getint('configuration', 'max_url_length')
 
 # Set the logging up
-log_file = configuration.get('configuration', 'log_file')
-logging.basicConfig(filename=log_file, level=logging.DEBUG)
+logging.basicConfig(filename=configuration.get('configuration', 'log_file'),
+                    level=logging.DEBUG)
+logger = logging.getLogger()
 
 discord_logger = DiscordLogger()
-discord_logger.setLevel(logging.DEBUG)
-
-friendly_discord_logger = DiscordLogger(channel="bouncer-log")
-friendly_discord_logger.setLevel(logging.INFO)
-
-logger = logging.getLogger()
 logger.addHandler(discord_logger)
-logger.addHandler(friendly_discord_logger)
 
 
 @client.event
@@ -120,10 +114,10 @@ async def process_message_command(message):
         channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = True
         session.commit()
+        logger.log(MESSAGE, "URLs disabled for channel `%s` by `%s`.",
+                   message.channel.name,
+                   message.author.name)
         await message.channel.send("URLs now blocked on this channel.")
-        logging.info("URLS disabled for channel `%s` by `%s`.",
-                     message.channel.name,
-                     message.author.name)
         return True
     elif (message.content.lower().startswith('!unblock_links')):
         channel = find_or_create_channel(message.channel.id, message.guild.id)
