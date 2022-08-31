@@ -6,7 +6,7 @@ import logging
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import str_from_urls, urls_from_str, session, client, token, configuration, MESSAGE
+from utility import str_from_list, urls_from_str, session, client, token, configuration, MESSAGE
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -95,7 +95,7 @@ async def process_message_command(message):
             session.add(AllowDomain(url_object.hostname,
                                     str(message.guild.id)))
         session.commit()
-        url_str = str_from_urls(urls)
+        url_str = str_from_list(urls)
         logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str)
         await message.channel.send(_("URLs `{}` added to allow list.")
                                    .format(url_str))
