@@ -6,7 +6,7 @@ import logging
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import urls_from_str, session, client, token, configuration, MESSAGE
+from utility import str_from_urls, urls_from_str, session, client, token, configuration, MESSAGE
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -83,7 +83,6 @@ async def process_message(message):
         # If we have made it to this point, URL is OK
         logger.log(MESSAGE, "URL marked as secure: %s", url)
 
-
 async def process_message_command(message):
     """Handle a command delivered as a message.
 
@@ -96,9 +95,10 @@ async def process_message_command(message):
             session.add(AllowDomain(url_object.hostname,
                                     str(message.guild.id)))
         session.commit()
-        logger.log(MESSAGE, "URLs `{}` added to allow list.", urls)
+        url_str = str_from_urls(urls)
+        logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str)
         await message.channel.send(_("URLs `{}` added to allow list.")
-                                   .format(urls))
+                                   .format(url_str))
         return True
     elif (message.content.lower().startswith('!unallow_domains')):
         urls = urls_from_str(message.content)
