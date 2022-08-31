@@ -42,3 +42,21 @@ AND environment variable! Prioritizing token from configuration.ini.")
 # Create a discord client
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
+
+# Define MESSAGE log level
+MESSAGE = 25
+
+# "Register" new loggin level
+logging.addLevelName(MESSAGE, 'MESSAGE')
+
+
+class MyLogger(logging.Logger):
+    """Custom logger with additional log level support."""
+
+    def message(self, msg, *args, **kwargs):
+        """Log a message."""
+        if self.isEnabledFor(MESSAGE):
+            self._log(MESSAGE, msg, args, **kwargs)
+
+
+logging.setLoggerClass(MyLogger)
