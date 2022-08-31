@@ -2,18 +2,18 @@
 
 import asyncio
 import logging
-from utility import client
-from utility import configuration
+from utility import client, configuration, MESSAGE
 
 
 class DiscordLogger(logging.Handler):
     """This class is responsible for logging to Discord."""
 
-    def __init__(self, channel=configuration.get('configuration', 'channel_log'),
+    def __init__(self, emit_level=MESSAGE, channel=configuration.get('configuration', 'channel_log'),
                  *args, **kwargs):
         """Create a Discord Logger."""
         super(self.__class__, self).__init__(*args, **kwargs)
         self.channel = channel
+        self.emit_level = emit_level
 
     def has_send_permissions(self, channel):
         """Check if the bot can write to a channel."""
@@ -34,6 +34,8 @@ class DiscordLogger(logging.Handler):
 
     def emit(self, record):
         """Invoke when a log is to be logged."""
+        if not record.levelno == self.emit_level:
+            return
         msg = self.format(record)
         for channel in self.log_channels():
             asyncio.create_task(channel.send(msg))
