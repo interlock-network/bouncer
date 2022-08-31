@@ -41,10 +41,10 @@ async def process_message(message):
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
     if channel and channel.block_links_p and str_contains_url_p(message.content):
-        logging.info("User `%s` posted message `%s` in nolink channel `%s`.",
-                     message.author.name,
-                     message.content,
-                     message.channel.name)
+        logger.log(MESSAGE, "User `%s` posted message `%s` in nolink channel `%s`.",
+                   message.author.name,
+                   message.content,
+                   message.channel.name)
         await message.reply(content=_("Mods have set this channel to have no links from users."))
         await message.delete()
         return
@@ -52,7 +52,7 @@ async def process_message(message):
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
-            logging.info("URL ignored: %s", url)
+            logger.log(MESSAGE, "URL ignored: %s", url)
             await message.reply(
                 content=_("URL `{0}` marked safe by server moderator.")
                 .format(url))
@@ -68,20 +68,20 @@ async def process_message(message):
                 content=_("Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logging.info("Ignoring URL %s because it is not HTTP/s", url)
+            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s", url)
             break
         elif (url_malicious_p(url)):
             await message.reply(
                 content=_("Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logging.info("URL marked as insecure: %s. Message: %s",
-                         url, message.content)
+            logger.log(MESSAGE, "URL marked as insecure: %s. Message: %s",
+                       url, message.content)
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logging.info("URL marked as secure: %s", url)
+        logger.log(MESSAGE, "URL marked as secure: %s", url)
 
 
 async def process_message_command(message):
