@@ -96,6 +96,7 @@ async def process_message_command(message):
             session.add(AllowDomain(url_object.hostname,
                                     str(message.guild.id)))
         session.commit()
+        logger.log(MESSAGE, "URLs `{}` added to allow list.", urls)
         await message.channel.send(_("URLs `{}` added to allow list.")
                                    .format(urls))
         return True
@@ -107,6 +108,7 @@ async def process_message_command(message):
                 hostname=url_object.hostname,
                 server_id=message.guild.id).delete()
         session.commit()
+        logger.log(MESSAGE, "URLs `{}` removed from allow list.", urls)
         await message.channel.send(_("URLs `{}` removed from allow list.")
                                    .format(urls))
         return True
@@ -123,10 +125,10 @@ async def process_message_command(message):
         channel = find_or_create_channel(message.channel.id, message.guild.id)
         channel.block_links_p = False
         session.commit()
+        logger.log(MESSAGE, "URLS enabled for channel `%s` by `%s`.",
+                   message.channel.name,
+                   message.author.name)
         await message.channel.send("URLs now allowed on this channel.")
-        logging.info("URLS enabled for channel `%s` by `%s`.",
-                     message.channel.name,
-                     message.author.name)
         return True
     else:
         return False
