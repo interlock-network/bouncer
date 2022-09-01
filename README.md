@@ -2,7 +2,7 @@
 
 # Interlock-Bouncer
 
-<img src="./assets/bouncer-dark.png" align="right" width="250" height="250"/>
+<img src="docs/bouncer-dark.png" align="right" width="250" height="250"/>
 
 Interlock-Bouncer is a Discord bot that scans your server for
 malicious links and neutralizes them. It does this by querying our
@@ -44,7 +44,7 @@ Message contains dangerous links! NAME: http://phishing.com
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="assets/screenshot.png">
+<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="docs/screenshot.png">
 
 # Channel for Bouncer activity log
 

@@ -1,6 +1,6 @@
 <!-- @format -->
 
-<img src="./assets/bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250" style="padding: 1rem"/>
+<img src="bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250" style="padding: 1rem"/>
 
 # Bouncer FAQ
 
@@ -56,7 +56,7 @@ Message contains dangerous links! NAME: http://phishing.com
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="assets/screenshot.png">
+<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="screenshot.png">
 
 ### Where can I see Bouncer's actions?
 
