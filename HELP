@@ -1,5 +1,6 @@
 Usage:
 
     make run                 # Run the Interlock-Bouncer.
-
-
+    make database            # Initialize the database.
+    make help                # Display this help.
+    make rsync_push          # Push the source files to a remote server.
