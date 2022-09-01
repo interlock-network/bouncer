@@ -31,7 +31,7 @@ async def on_ready():
     """Invoke when the bot has connected to Discord."""
     print(f'{client.user} has connected to Discord!')
     # Set the bot profile picture
-    with open('profile.png', 'rb') as image:
+    with open('assets/profile.png', 'rb') as image:
         await client.user.edit(avatar=image.read())
 
 
@@ -82,6 +82,7 @@ async def process_message(message):
             break
         # If we have made it to this point, URL is OK
         logger.log(MESSAGE, "URL marked as secure: %s", url)
+
 
 async def process_message_command(message):
     """Handle a command delivered as a message.
