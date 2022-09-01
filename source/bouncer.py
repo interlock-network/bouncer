@@ -88,7 +88,9 @@ async def process_message_command(message):
 
     Return True if the message is a command.
     """
-    if (message.content.lower().startswith('!allow_domains')):
+    if not message.author.guild_permissions.administrator:
+        return False
+    elif (message.content.lower().startswith('!allow_domains')):
         urls = urls_from_str(message.content)
         for url in urls:
             url_object = urlparse(url)
