@@ -1,0 +1,4 @@
+sqlalchemy
+py-cord
+requests
+python-lsp-server

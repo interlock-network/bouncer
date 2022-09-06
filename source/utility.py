@@ -49,7 +49,8 @@ AND environment variable! Prioritizing token from configuration.ini.")
 
 # Create a discord client
 intents = discord.Intents.default()
-client = discord.Client(intents=intents)
+intents.message_content = True
+client = discord.Bot(intents = intents, debug_guilds = [configuration.get('configuration', 'debug_guild')])
 
 # Define MESSAGE log level
 MESSAGE = 25

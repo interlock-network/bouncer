@@ -2,6 +2,7 @@
 
 import gettext
 import logging
+import discord
 
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
@@ -34,9 +35,13 @@ async def on_ready():
     with open('docs/profile.png', 'rb') as image:
         await client.user.edit(avatar=image.read())
 
-
-async def process_message(message):
+@client.event
+async def on_message(message):
     """Handle a message, deleting or stripping it of links."""
+
+    if message.author == client.user:
+        return
+        
     channel = session.query(Channel).filter_by(
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
@@ -83,75 +88,56 @@ async def process_message(message):
         # If we have made it to this point, URL is OK
         logger.log(MESSAGE, "URL marked as secure: %s", url)
 
+@client.slash_command()
+async def allow_domains(ctx, domains_separated_by_space: discord.Option(discord.SlashCommandOptionType.string)):
+    """Allows a set of domains."""
+    urls = urls_from_str(domains_separated_by_space)
+    for url in urls:
+        url_object = urlparse(url)
+        session.add(AllowDomain(url_object.hostname,
+                                str(ctx.guild.id)))
+    session.commit()
+    url_str = str_from_list(urls)
+    logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str)
+    await ctx.respond(_("URLs `{}` added to allow list.")
+                                .format(url_str))
 
-async def process_message_command(message):
-    """Handle a command delivered as a message.
+@client.slash_command()
+async def unallow_domains(ctx, domains_separated_by_space: discord.Option(discord.SlashCommandOptionType.string)):
+    """Unallows a set of domains."""
+    urls = urls_from_str(domains_separated_by_space)
+    for url in urls:
+        url_object = urlparse(url)
+        session.query(AllowDomain).filter_by(
+            hostname=url_object.hostname,
+            server_id=ctx.guild.id).delete()
+    session.commit()
+    url_str = str_from_list(urls)
+    logger.log(MESSAGE, "URLs `%s` removed from allow list.", url_str)
+    await ctx.respond(_("URLs `{}` removed from allow list.")
+                                .format(url_str))
 
-    Return True if the message is a command.
-    """
-    if not message.author.guild_permissions.administrator:
-        return False
-    elif (message.content.lower().startswith('!allow_domains')):
-        urls = urls_from_str(message.content)
-        for url in urls:
-            url_object = urlparse(url)
-            session.add(AllowDomain(url_object.hostname,
-                                    str(message.guild.id)))
-        session.commit()
-        url_str = str_from_list(urls)
-        logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str)
-        await message.channel.send(_("URLs `{}` added to allow list.")
-                                   .format(url_str))
-        return True
-    elif (message.content.lower().startswith('!unallow_domains')):
-        urls = urls_from_str(message.content)
-        for url in urls:
-            url_object = urlparse(url)
-            session.query(AllowDomain).filter_by(
-                hostname=url_object.hostname,
-                server_id=message.guild.id).delete()
-        session.commit()
-        logger.log(MESSAGE, "URLs `{}` removed from allow list.", urls)
-        await message.channel.send(_("URLs `{}` removed from allow list.")
-                                   .format(urls))
-        return True
-    elif (message.content.lower().startswith('!block_links')):
-        channel = find_or_create_channel(message.channel.id, message.guild.id)
-        channel.block_links_p = True
-        session.commit()
-        logger.log(MESSAGE, "URLs disabled for channel `%s` by `%s`.",
-                   message.channel.name,
-                   message.author.name)
-        await message.channel.send("URLs now blocked on this channel.")
-        return True
-    elif (message.content.lower().startswith('!unblock_links')):
-        channel = find_or_create_channel(message.channel.id, message.guild.id)
-        channel.block_links_p = False
-        session.commit()
-        logger.log(MESSAGE, "URLs enabled for channel `%s` by `%s`.",
-                   message.channel.name,
-                   message.author.name)
-        await message.channel.send("URLs now allowed on this channel.")
-        return True
-    else:
-        return False
+@client.slash_command()
+async def unblock_links(ctx):
+    """Unblock links."""
+    channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
+    channel.block_links_p = False
+    session.commit()
+    logger.log(MESSAGE, "URLs enabled for channel `%s` by `%s`.",
+                ctx.channel.name,
+                ctx.author.name)
+    await ctx.respond("URLs now allowed on this channel.")
 
-
-@client.event
-async def on_message(message):
-    """Invoke when a message is received on the Guild/server."""
-    if message.author.bot:
-        return
-    if (not await process_message_command(message)):
-        await process_message(message)
-
-
-@client.event
-async def on_message_edit(message_before, message_after):
-    """Invoke when a message is edited on the Guild/server."""
-    if message_before.author.bot or message_after.author.bot:
-        return
-    await process_message(message_after)
+@client.slash_command()
+async def block_links(ctx):
+    """Block links."""
+    channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
+    channel.block_links_p = True
+    session.commit()
+    logger.log(MESSAGE, "URLs disabled for channel `%s` by `%s`.",
+                ctx.channel.name,
+                ctx.author.name)
+    await ctx.respond("URLs now blocked on this channel.")
 
 if __name__ == '__main__':
     client.run(token)
