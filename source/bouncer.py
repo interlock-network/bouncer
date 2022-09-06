@@ -86,7 +86,7 @@ async def on_message(message):
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: %s", url)
+        logger.log(MESSAGE, "URL marked as secure: \n%s\n%s\n%s", message.author.name, message.channel.name, url)
 
 @client.slash_command()
 async def allow_domains(ctx, domains_separated_by_space: discord.Option(discord.SlashCommandOptionType.string)):
