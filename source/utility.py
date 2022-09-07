@@ -15,12 +15,13 @@ def urls_from_str(str):
     [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
     return urlRegex
 
+
 def str_from_list(urls):
-    """Returns a human interpreted phrase from a list of urls."""
+    """Return a human interpreted phrase from a list of urls."""
     if len(urls) == 1:
         return urls[0]
     elif len(urls) == 2:
-        return urls[0] + " and " + urls[1];
+        return urls[0] + " and " + urls[1]
     return (urls.pop(0) + ", " + str_from_list(urls))
 
 
