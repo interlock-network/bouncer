@@ -2,7 +2,7 @@
 
 import asyncio
 import logging
-from utility import client, configuration, MESSAGE
+from utility import configuration, MESSAGE
 
 
 class DiscordLogger(logging.Handler):
@@ -20,22 +20,16 @@ class DiscordLogger(logging.Handler):
         permissions = channel.permissions_for(channel.guild.me)
         return permissions.send_messages
 
-    def log_channels(self):
-        """Return the list of channels to log to."""
-        if hasattr(self, "channels") and self.channels != []:
-            return self.channels
-        else:
-            self.channels = []
-            for guild in client.guilds:
-                for channel in guild.channels:
-                    if channel.name == self.channel and self.has_send_permissions(channel):
-                        self.channels.append(channel)
-            return self.channels
+    def log_channel(self, server):
+        """Return the logging channel for a given server."""
+        for channel in server.channels:
+            if channel.name == self.channel and self.has_send_permissions(channel):
+                return channel
 
     def emit(self, record):
         """Invoke when a log is to be logged."""
         if not record.levelno == self.emit_level:
             return
         msg = self.format(record)
-        for channel in self.log_channels():
-            asyncio.create_task(channel.send(msg))
+        channel = self.log_channel(record.server)
+        asyncio.create_task(channel.send(msg))
