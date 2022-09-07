@@ -44,7 +44,8 @@ async def process_message(message):
         logger.log(MESSAGE, "User `%s` posted message `%s` in nolink channel `%s`.",
                    message.author.name,
                    message.content,
-                   message.channel.name)
+                   message.channel.name,
+                   extra={'server': message.guild})
         await message.reply(content=_("Mods have set this channel to have no links from users."))
         await message.delete()
         return
@@ -52,7 +53,7 @@ async def process_message(message):
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
-            logger.log(MESSAGE, "URL ignored: %s", url)
+            logger.log(MESSAGE, "URL ignored: %s", url, extra={'server': message.guild})
             await message.reply(
                 content=_("URL `{0}` marked safe by server moderator.")
                 .format(url))
@@ -68,7 +69,7 @@ async def process_message(message):
                 content=_("Caution: message contains URLs which cannot be scanned! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s", url)
+            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s", url, extra={'server': message.guild})
             break
         elif (url_malicious_p(url)):
             await message.reply(
@@ -76,12 +77,13 @@ async def process_message(message):
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
             logger.log(MESSAGE, "URL marked as insecure: %s. Message: %s",
-                       url, message.content)
+                       url, message.content,
+                       extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: %s", url)
+        logger.log(MESSAGE, "URL marked as secure: %s", url, extra={'server': message.guild})
 
 
 async def process_message_command(message):
@@ -99,7 +101,7 @@ async def process_message_command(message):
                                     str(message.guild.id)))
         session.commit()
         url_str = str_from_list(urls)
-        logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str)
+        logger.log(MESSAGE, "URLs `%s` added to allow list.", url_str, extra={'server': message.guild})
         await message.channel.send(_("URLs `{}` added to allow list.")
                                    .format(url_str))
         return True
@@ -111,7 +113,7 @@ async def process_message_command(message):
                 hostname=url_object.hostname,
                 server_id=message.guild.id).delete()
         session.commit()
-        logger.log(MESSAGE, "URLs `{}` removed from allow list.", urls)
+        logger.log(MESSAGE, "URLs `{}` removed from allow list.", urls, extra={'server': message.guild})
         await message.channel.send(_("URLs `{}` removed from allow list.")
                                    .format(urls))
         return True
@@ -121,7 +123,8 @@ async def process_message_command(message):
         session.commit()
         logger.log(MESSAGE, "URLs disabled for channel `%s` by `%s`.",
                    message.channel.name,
-                   message.author.name)
+                   message.author.name,
+                   extra={'server': message.guild})
         await message.channel.send("URLs now blocked on this channel.")
         return True
     elif (message.content.lower().startswith('!unblock_links')):
@@ -130,7 +133,8 @@ async def process_message_command(message):
         session.commit()
         logger.log(MESSAGE, "URLs enabled for channel `%s` by `%s`.",
                    message.channel.name,
-                   message.author.name)
+                   message.author.name,
+                   extra={'server': message.guild})
         await message.channel.send("URLs now allowed on this channel.")
         return True
     else:
