@@ -1,7 +1,6 @@
 """Utility functions."""
 
 import logging
-import re
 import configparser
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -9,11 +8,17 @@ import discord
 import os
 
 
-def urls_from_str(str):
-    """Find and return all URLs in a string."""
-    urlRegex = re.findall('[a-zA-Z]+?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|\
-    [!*, ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', str)
-    return urlRegex
+def urls_from_str(content):
+    """Find and return all URLs in a string.
+
+    Treat any word with :// as a URL.
+    """
+    words = content.split()
+    urls = []
+    for word in words:
+        if "://" in word:
+            urls.append(word.replace("://\\", "://"))
+    return urls
 
 
 def str_from_list(urls):
