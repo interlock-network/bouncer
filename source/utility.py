@@ -55,6 +55,7 @@ AND environment variable! Prioritizing token from configuration.ini.")
 
 # Create a discord client
 intents = discord.Intents.default()
+intents.message_content = True
 client = discord.Client(intents=intents)
 
 # Define MESSAGE log level
