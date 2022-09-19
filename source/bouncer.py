@@ -86,7 +86,7 @@ async def process_message(message):
         logger.log(MESSAGE, "URL marked as secure: %s", url, extra={'server': message.guild})
 
 
-@bot.slash_command(guild_ids=["364224882730467328"])
+@bot.slash_command()
 async def unallow_domain(ctx, url):
     """Block a domain in a given channel."""
     url_object = urlparse(url)
@@ -98,7 +98,7 @@ async def unallow_domain(ctx, url):
     await ctx.respond(_("URL `{}` removed from allow list.").format(url))
 
 
-@bot.slash_command(guild_ids=["364224882730467328"])
+@bot.slash_command()
 async def allow_domain(ctx, url):
     """Allow a domain in a given channel."""
     url_object = urlparse(url)
@@ -108,7 +108,7 @@ async def allow_domain(ctx, url):
     await ctx.respond(_("URL `{}` added to allow list.").format(url))
 
 
-@bot.slash_command(guild_ids=["364224882730467328"])
+@bot.slash_command()
 async def block_links(ctx):
     """Block links on a channel."""
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
@@ -121,7 +121,7 @@ async def block_links(ctx):
     await ctx.respond("URLs now blocked on this channel.")
 
 
-@bot.slash_command(guild_ids=["364224882730467328"])
+@bot.slash_command()
 async def unblock_links(ctx):
     """Enable links on a channel."""
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
