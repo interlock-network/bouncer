@@ -6,7 +6,7 @@ import logging
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import str_from_list, urls_from_str, session, client, token, configuration, MESSAGE
+from utility import str_from_list, urls_from_str, session, bot, token, configuration, MESSAGE
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -26,13 +26,13 @@ discord_logger = DiscordLogger()
 logger.addHandler(discord_logger)
 
 
-@client.event
+@bot.event
 async def on_ready():
     """Invoke when the bot has connected to Discord."""
-    print(f'{client.user} has connected to Discord!')
+    print(f'{bot.user} has connected to Discord!')
     # Set the bot profile picture
     with open('docs/profile.png', 'rb') as image:
-        await client.user.edit(avatar=image.read())
+        await bot.user.edit(avatar=image.read())
 
 
 async def process_message(message):
@@ -142,15 +142,15 @@ async def process_message_command(message):
 
 
 @client.event
+@bot.event
 async def on_message(message):
     """Invoke when a message is received on the Guild/server."""
     if message.author.bot:
         return
-    if (not await process_message_command(message)):
-        await process_message(message)
+    await process_message(message)
 
 
-@client.event
+@bot.event
 async def on_message_edit(message_before, message_after):
     """Invoke when a message is edited on the Guild/server."""
     if message_before.author.bot or message_after.author.bot:
@@ -158,4 +158,4 @@ async def on_message_edit(message_before, message_after):
     await process_message(message_after)
 
 if __name__ == '__main__':
-    client.run(token)
+    bot.run(token)

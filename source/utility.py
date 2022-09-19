@@ -53,10 +53,10 @@ if (token_from_config and token_from_environment and
     logging.warning("Different Discord token set via configuration.ini file \
 AND environment variable! Prioritizing token from configuration.ini.")
 
-# Create a discord client
+# Create a discord bot
 intents = discord.Intents.default()
 intents.message_content = True
-client = discord.Client(intents=intents)
+bot = discord.Bot(intents=intents)
 
 # Define MESSAGE log level
 MESSAGE = 25
