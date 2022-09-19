@@ -6,7 +6,7 @@ import logging
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
-from utility import str_from_list, urls_from_str, session, bot, token, configuration, MESSAGE
+from utility import urls_from_str, session, bot, token, configuration, MESSAGE
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
