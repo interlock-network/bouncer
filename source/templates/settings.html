@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+<style>
+  body {
+      margin: auto;
+      max-width: 600px;
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<h1>Bouncer settings:</h1>
+<h2>Server Name: {{ server_name }}</h2>
+<h2>Channel Name: {{ channel_name }}</h2>
+
+<form class="pure-form" action="?" method="post">
+  <label for="checkbox-radio-option-one" class="pure-checkbox">
+    <input type="checkbox" id="checkbox-radio-option-one" value="" name="urls_disabled" /> Links disabled?
+  </label>
+  <br />
+  <textarea placeholder="List of allowed URLs (comma separated)." name="allowed_urls"></textarea>
+  <br />
+  <br />
+  <input type="hidden" value="{{ key }}" name="key">
+  <button type="submit" class="pure-button pure-button-primary">Save settings ⚙</button>
+</form>
+
+
