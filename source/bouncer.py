@@ -88,7 +88,7 @@ async def process_message(message):
 
 @bot.slash_command()
 async def unallow_domain(ctx, url):
-    """Block a domain in a given channel."""
+    """Remove a domain from the allow list in a given server."""
     url_object = urlparse(url)
     session.query(AllowDomain).filter_by(
         hostname=url_object.hostname,
@@ -100,7 +100,7 @@ async def unallow_domain(ctx, url):
 
 @bot.slash_command()
 async def allow_domain(ctx, url):
-    """Allow a domain in a given channel."""
+    """Allow a domain in a given server."""
     url_object = urlparse(url)
     session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
     session.commit()
