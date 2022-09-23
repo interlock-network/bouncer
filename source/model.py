@@ -86,6 +86,29 @@ class Message(Base):
         self.time = datetime.datetime.now()
 
 
+class SettingsAccessRequest(Base):
+    """This class represents an access of the settings system."""
+
+    __tablename__ = 'accessrequest'
+    id = Column(Integer, primary_key=True)
+    # A unique one-time use key for accessing user settings.
+    key = Column(Text)
+    server_id = Column(Text)
+    channel_id = Column(Text)
+    server_name = Column(Text)
+    channel_name = Column(Text)
+    time = Column('timestamp', TIMESTAMP(timezone=False), nullable=False)
+
+    def __init__(self, key, server_id, channel_id, server_name, channel_name):
+        """Create an access request."""
+        self.key = key
+        self.server_id = server_id
+        self.channel_id = channel_id
+        self.server_name = server_name
+        self.channel_name = channel_name
+        self.time = datetime.datetime.now()
+
+
 if __name__ == '__main__':
     # Create the database
     configuration.read('configuration.ini')
