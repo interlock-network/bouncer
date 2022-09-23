@@ -9,5 +9,6 @@ in
   (pycord ps)
   sqlalchemy
   requests
+  flask
   python-lsp-server
 ])).env
