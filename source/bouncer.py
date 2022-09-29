@@ -119,8 +119,8 @@ async def process_message(message):
                 content=_("Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`",
-                       url, message.content,
+            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`. Channel: `%s`",
+                       url, message.content, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
