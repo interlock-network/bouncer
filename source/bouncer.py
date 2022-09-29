@@ -119,14 +119,14 @@ async def process_message(message):
                 content=_("Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "URL marked as insecure: %s. Message: %s",
+            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`",
                        url, message.content,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: %s", url, extra={'server': message.guild})
+        logger.log(MESSAGE, "URL marked as secure: `%s`", url, extra={'server': message.guild})
 
 
 @bot.slash_command()
