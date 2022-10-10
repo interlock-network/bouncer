@@ -132,6 +132,9 @@ async def process_message(message):
 @bot.slash_command()
 async def edit_settings_web_interface(ctx):
     """Allow the user to edit channel settings via a web interface."""
+    if not ctx.author.guild_permissions.ban_members:
+        ctx.respond("You do not have permissions to do this action!")
+        return
     key = token_urlsafe(32)
     session.add(SettingsAccessRequest(key, ctx.guild.id, ctx.channel.id,
                                       ctx.guild.name, ctx.channel.name))
