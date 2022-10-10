@@ -32,4 +32,5 @@ class DiscordLogger(logging.Handler):
             return
         msg = self.format(record)
         channel = self.log_channel(record.server)
-        asyncio.create_task(channel.send(msg))
+        if channel:
+            asyncio.create_task(channel.send(msg))
