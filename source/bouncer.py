@@ -170,6 +170,9 @@ async def allow_domain(ctx, url):
 @bot.slash_command()
 async def block_links(ctx):
     """Block links on a channel."""
+    if not ctx.guild:
+        await ctx.respond("You may only block links in a Server's channel.")
+        return
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
     channel.block_links_p = True
     session.commit()
@@ -183,6 +186,9 @@ async def block_links(ctx):
 @bot.slash_command()
 async def unblock_links(ctx):
     """Enable links on a channel."""
+    if not ctx.guild:
+        await ctx.respond("You may only unblock links in a Server's channel.")
+        return
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
     channel.block_links_p = False
     session.commit()
