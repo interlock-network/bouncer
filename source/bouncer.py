@@ -210,5 +210,5 @@ async def on_message_edit(message_before, message_after):
 
 if __name__ == '__main__':
     # Start Flask on a separate thread.
-    Thread(target=lambda: app.run(debug=True, use_reloader=False)).start()
+    Thread(target=lambda: app.run(debug=False, use_reloader=False, host='0.0.0.0', port=80)).start()
     bot.run(token)
