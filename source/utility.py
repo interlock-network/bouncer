@@ -42,7 +42,10 @@ bouncer_domain = configuration.get('configuration', 'domain')
 
 # Setup the SQLAlchemy session
 sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
-engine = create_engine(sqlalchemy_url, echo=False, future=True)
+engine = create_engine(sqlalchemy_url,
+                       echo=False,
+                       future=True,
+                       connect_args={"check_same_thread": False})
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
