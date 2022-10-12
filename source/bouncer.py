@@ -29,6 +29,18 @@ logger.addHandler(discord_logger)
 app = Flask(__name__)
 
 
+@app.route('/statistics', methods=['GET'])
+def statistics_view():
+    """Return a view of KPIs."""
+    server_count = len(bot.guilds)
+    user_count = 0
+    for server in bot.guilds:
+        user_count += server.member_count
+    return render_template('statistics.html',
+                           server_count=server_count,
+                           user_count=user_count)
+
+
 @app.route('/settings', methods=['GET'])
 def settings_view():
     """Return a page the user can edit settings on."""
