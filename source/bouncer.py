@@ -1,13 +1,14 @@
 """Main entry point for the Interlock-Bouncer."""
 
 import logging
+import requests
 
 from gettext import gettext
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel, SettingsAccessRequest
 from model import find_or_create_channel
 from utility import urls_from_str, session, bot, token, configuration, MESSAGE
-from utility import max_url_length, bouncer_domain
+from utility import max_url_length, bouncer_domain, backend_base_url, backend_api_key
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
@@ -36,9 +37,30 @@ def statistics_view():
     user_count = 0
     for server in bot.guilds:
         user_count += server.member_count
+
+    json_payload = {
+        "key": backend_api_key,
+    }
+
+    r = requests.post("{0}/urls_scanned_count".format(backend_base_url), json=json_payload)
+    urls_scanned_count = r.text
+
+    r = requests.post("{0}/malicious_urls_scanned_count".format(backend_base_url), json=json_payload)
+    malicious_urls_scanned_count = r.text
+
+    r = requests.post("{0}/unique_urls_scanned_count".format(backend_base_url), json=json_payload)
+    unique_urls_scanned_count = r.text
+
+    r = requests.post("{0}/unique_malicious_urls_scanned_count".format(backend_base_url), json=json_payload)
+    unique_malicious_urls_scanned_count = r.text
+
     return render_template('statistics.html',
                            server_count=server_count,
-                           user_count=user_count)
+                           user_count=user_count,
+                           urls_scanned_count=urls_scanned_count,
+                           malicious_urls_scanned_count=malicious_urls_scanned_count,
+                           unique_urls_scanned_count=unique_urls_scanned_count,
+                           unique_malicious_urls_scanned_count=unique_malicious_urls_scanned_count)
 
 
 @app.route('/settings', methods=['GET'])
