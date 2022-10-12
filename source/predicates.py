@@ -1,13 +1,9 @@
 """Predicates."""
-from utility import configuration
 import requests
 import re
 
-from utility import urls_from_str
+from utility import urls_from_str, backend_base_url, backend_api_key
 from model import AllowDomain
-
-base_url = configuration.get('backend', 'base_url')
-api_key = configuration.get('backend', 'api_key')
 
 
 def url_http_p(str):
@@ -27,11 +23,11 @@ def str_contains_url_p(str):
 def url_malicious_p(url):
     """Return True or False depending on whether a URL is malicious or not."""
     json_payload = {
-        "key": api_key,
+        "key": backend_api_key,
         "url": url
     }
 
-    r = requests.post("{0}/malicious_p".format(base_url), json=json_payload)
+    r = requests.post("{0}/malicious_p".format(backend_base_url), json=json_payload)
     rjson = r.json()
     return rjson['malicious']
 

@@ -34,6 +34,10 @@ def str_from_list(urls):
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
 
+# Parse the backend API details
+backend_base_url = configuration.get('backend', 'base_url')
+backend_api_key = configuration.get('backend', 'api_key')
+
 # Max URL length
 max_url_length = configuration.getint('configuration', 'max_url_length')
 
