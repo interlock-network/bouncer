@@ -160,7 +160,9 @@ async def process_message(message):
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: `%s`", url, extra={'server': message.guild})
+        logger.log(MESSAGE, "URL marked as secure: `%s`. Channel: `%s`",
+                   url, message.channel.name,
+                   extra={'server': message.guild})
 
 
 @bot.slash_command()
