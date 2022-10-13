@@ -77,13 +77,15 @@ def settings_save():
     access_request = session.query(SettingsAccessRequest).filter_by(key=key).first()
     if access_request:
         channel = find_or_create_channel(access_request.channel_id, access_request.server_id)
+        urls_disabled = request.form.get("urls_disabled")
+        allowed_urls = request.form.get("allowed_urls")
 
-        if(request.form.get("urls_disabled")):
+        if urls_disabled:
             channel.block_links_p = False
         else:
             channel.block_links_p = True
 
-        for url in request.form.get("allowed_urls").split(","):
+        for url in allowed_urls.split(","):
             url_object = urlparse(url)
             session.add(AllowDomain(url_object.hostname, access_request.server_id))
 
@@ -145,6 +147,8 @@ async def process_message(message):
             await message.reply(
                 content=_("Caution: message may contain dangerous links! \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
+            if message.author.guild_permissions.administrator:
+                await message.reply("If you believe this URL is safe, use `/add_to_allowlist {0}` and then post the message again.".format(url))
             await message.delete()
             logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`. Channel: `%s`",
                        url, message.content, message.channel.name,
