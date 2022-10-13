@@ -72,7 +72,7 @@ async def process_message(message):
                 content=_("Watch it! This message has URLs that can't be scanned. \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s",
+            logger.log(MESSAGE, "Ignoring `%s` because it is not HTTP/s",
                        url, extra={'server': message.guild})
             break
         elif (url_malicious_p(url)):
@@ -80,22 +80,22 @@ async def process_message(message):
                 content=_("Watch it! This message may have dangerous links. \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             if message.author.guild_permissions.administrator:
-                await message.reply("Hey mods, if this message is safe, just use `/add_to_allowlist {0}` and post it again.".format(url))
+                await message.reply("Hey mods, if this message is safe, just type `/add_to_allowlist {0}` and then post it again.".format(url))
             await message.delete()
-            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`. Channel: `#%s`",
-                       url, message.content, message.channel.name,
+            logger.log(MESSAGE, "Dangerous URL deleted: `%s` \nMessage: `'%s'` \nAuthor: `@%s` \nChannel: `#%s`",
+                       url, message.content, message.author.name, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: `%s`. Channel: `#%s`",
+        logger.log(MESSAGE, "Scanned safe URL `%s` \nChannel: `#%s`",
                    url, message.channel.name,
                    extra={'server': message.guild})
 
 
 @bot.slash_command()
-async def edit_settings_web_interface(ctx):
+async def web_channel_edit(ctx):
     """Allow the user to edit channel settings via a web interface."""
     if not ctx.author.guild_permissions.ban_members:
         await ctx.respond("Denied! You're not authorized to do this.")
@@ -105,7 +105,7 @@ async def edit_settings_web_interface(ctx):
                                       ctx.guild.name, ctx.channel.name))
     session.commit()
     await ctx.author.send(
-        "Yo! Edit settings for channel `#{}` in server `{}`, visit: {}/settings?key={} in a browser. This URL can only be used once!".format(
+        "Yo! To edit your Bouncer settings for channel `#{}` in server `{}`, click {}/settings?key={}. This URL can only be used once!".format(
             ctx.channel.name, ctx.guild.name, bouncer_domain, key))
     await ctx.respond("Check your DMs for your one-time link to edit this channel on the web.")
 
