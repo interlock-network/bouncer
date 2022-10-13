@@ -182,7 +182,7 @@ async def edit_settings_web_interface(ctx):
 
 
 @bot.slash_command()
-async def unallow_domain(ctx, url):
+async def remove_from_allowlist(ctx, url):
     """Remove a domain from the allow list in a given server."""
     url_object = urlparse(url)
     session.query(AllowDomain).filter_by(
@@ -194,7 +194,7 @@ async def unallow_domain(ctx, url):
 
 
 @bot.slash_command()
-async def allow_domain(ctx, url):
+async def add_to_allowlist(ctx, url):
     """Allow a domain in a given server."""
     url_object = urlparse(url)
     session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
