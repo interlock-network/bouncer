@@ -69,13 +69,13 @@ the allowlist. Allowlists are not shared between servers.
 
 # Block all links in a channel
 
-To block all URLs in a channel, use `!block_links`:
+To block all URLs in a channel, use `/block_links`:
 
-`!block_links`
+`/block_links`
 
-To cancel this action and allow URLs again in a channel, use `!unblock_links`:
+To cancel this action and allow URLs again in a channel, use `/unblock_links`:
 
-`!unblock_links`
+`/unblock_links`
 
 # Flowchart
 
