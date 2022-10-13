@@ -43,51 +43,53 @@ async def process_message(message):
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
     if channel and channel.block_links_p and str_contains_url_p(message.content):
-        logger.log(MESSAGE, "User `%s` posted message `%s` in nolink channel `%s`.",
+        logger.log(MESSAGE, "User `@%s` posted message `%s` in nolink channel `#%s`.",
                    message.author.name,
                    message.content,
                    message.channel.name,
                    extra={'server': message.guild})
-        await message.reply(content=_("Mods have set this channel to have no links from users."))
+        await message.reply(content=_("Denied! Mods said to block URLs from users in this channel."))
         await message.delete()
         return
 
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
-            logger.log(MESSAGE, "URL ignored: %s", url, extra={'server': message.guild})
+            logger.log(MESSAGE, "URL ignored: %s", url,
+                       extra={'server': message.guild})
             await message.reply(
-                content=_("URL `{0}` marked safe by server moderator.")
+                content=_("Mods said `{0}` is safe.")
                 .format(url))
             break
         elif (len(url) > max_url_length):
             await message.reply(
-                content=_("Caution: message contains URLs which cannot be scanned! \n\
+                content=_("Watch it! This message has URLs that can't be scanned. \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
             break
         elif (not url_http_p(url)):
             await message.reply(
-                content=_("Caution: message contains URLs which cannot be scanned! \n\
+                content=_("Watch it! This message has URLs that can't be scanned. \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s", url, extra={'server': message.guild})
+            logger.log(MESSAGE, "Ignoring URL %s because it is not HTTP/s",
+                       url, extra={'server': message.guild})
             break
         elif (url_malicious_p(url)):
             await message.reply(
-                content=_("Caution: message may contain dangerous links! \n\
+                content=_("Watch it! This message may have dangerous links. \n\
 **{0}:** `{1}`").format(message.author.name, message.content))
             if message.author.guild_permissions.administrator:
-                await message.reply("If you believe this URL is safe, use `/add_to_allowlist {0}` and then post the message again.".format(url))
+                await message.reply("Hey mods, if this message is safe, just use `/add_to_allowlist {0}` and post it again.".format(url))
             await message.delete()
-            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`. Channel: `%s`",
+            logger.log(MESSAGE, "URL marked as insecure: `%s`. Message: `%s`. Channel: `#%s`",
                        url, message.content, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "URL marked as secure: `%s`. Channel: `%s`",
+        logger.log(MESSAGE, "URL marked as secure: `%s`. Channel: `#%s`",
                    url, message.channel.name,
                    extra={'server': message.guild})
 
@@ -96,16 +98,16 @@ async def process_message(message):
 async def edit_settings_web_interface(ctx):
     """Allow the user to edit channel settings via a web interface."""
     if not ctx.author.guild_permissions.ban_members:
-        await ctx.respond("You do not have permissions to do this action!")
+        await ctx.respond("Denied! You're not authorized to do this.")
         return
     key = token_urlsafe(32)
     session.add(SettingsAccessRequest(key, ctx.guild.id, ctx.channel.id,
                                       ctx.guild.name, ctx.channel.name))
     session.commit()
     await ctx.author.send(
-        "To edit the settings for channel `{}` in server `{}`, visit: {}/settings?key={} in a browser. This URL can only be used once!".format(
+        "Yo! Edit settings for channel `#{}` in server `{}`, visit: {}/settings?key={} in a browser. This URL can only be used once!".format(
             ctx.channel.name, ctx.guild.name, bouncer_domain, key))
-    await ctx.respond("Edit code successfully requested. Please check your direct messages.")
+    await ctx.respond("Check your DMs for your one-time link to edit this channel on the web.")
 
 
 @bot.slash_command()
@@ -116,7 +118,8 @@ async def remove_from_allowlist(ctx, url):
         hostname=url_object.hostname,
         server_id=ctx.guild.id).delete()
     session.commit()
-    logger.log(MESSAGE, "URL `%s` removed from allow list.", url, extra={'server': ctx.guild})
+    logger.log(MESSAGE, "URL `%s` removed from allow list.",
+               url, extra={'server': ctx.guild})
     await ctx.respond(_("URL `{}` removed from allow list.").format(url))
 
 
@@ -126,7 +129,8 @@ async def add_to_allowlist(ctx, url):
     url_object = urlparse(url)
     session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
     session.commit()
-    logger.log(MESSAGE, "URL `%s` added to allow list.", url, extra={'server': ctx.guild})
+    logger.log(MESSAGE, "URL `%s` added to allow list.",
+               url, extra={'server': ctx.guild})
     await ctx.respond(_("URL `{}` added to allow list.").format(url))
 
 
@@ -139,7 +143,7 @@ async def block_links(ctx):
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
     channel.block_links_p = True
     session.commit()
-    logger.log(MESSAGE, "URLs disabled for channel `%s` by `%s`.",
+    logger.log(MESSAGE, "URLs disabled for channel `#%s` by `@%s`.",
                ctx.channel.name,
                ctx.author.name,
                extra={'server': ctx.guild})
@@ -155,7 +159,7 @@ async def unblock_links(ctx):
     channel = find_or_create_channel(ctx.channel.id, ctx.guild.id)
     channel.block_links_p = False
     session.commit()
-    logger.log(MESSAGE, "URLs enabled for channel `%s` by `%s`.",
+    logger.log(MESSAGE, "URLs enabled for channel `#%s` by `@%s`.",
                ctx.channel.name,
                ctx.author.name,
                extra={'server': ctx.guild})
@@ -179,5 +183,6 @@ async def on_message_edit(message_before, message_after):
 
 if __name__ == '__main__':
     # Start Flask on a separate thread.
-    Thread(target=lambda: app.run(debug=False, use_reloader=False, host='0.0.0.0', port=80)).start()
+    Thread(target=lambda: app.run(debug=False,
+           use_reloader=False, host='0.0.0.0', port=80)).start()
     bot.run(token)
