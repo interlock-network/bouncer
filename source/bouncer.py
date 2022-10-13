@@ -42,17 +42,10 @@ def statistics_view():
         "key": backend_api_key,
     }
 
-    r = requests.post("{0}/urls_scanned_count".format(backend_base_url), json=json_payload)
-    urls_scanned_count = r.text
-
-    r = requests.post("{0}/malicious_urls_scanned_count".format(backend_base_url), json=json_payload)
-    malicious_urls_scanned_count = r.text
-
-    r = requests.post("{0}/unique_urls_scanned_count".format(backend_base_url), json=json_payload)
-    unique_urls_scanned_count = r.text
-
-    r = requests.post("{0}/unique_malicious_urls_scanned_count".format(backend_base_url), json=json_payload)
-    unique_malicious_urls_scanned_count = r.text
+    urls_scanned_count = requests.post("{0}/urls_scanned_count".format(backend_base_url), json=json_payload).text
+    malicious_urls_scanned_count = requests.post("{0}/malicious_urls_scanned_count".format(backend_base_url), json=json_payload).text
+    unique_urls_scanned_count = requests.post("{0}/unique_urls_scanned_count".format(backend_base_url), json=json_payload).text
+    unique_malicious_urls_scanned_count = requests.post("{0}/unique_malicious_urls_scanned_count".format(backend_base_url), json=json_payload).text
 
     return render_template('statistics.html',
                            server_count=server_count,
