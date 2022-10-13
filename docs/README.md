@@ -87,14 +87,14 @@ To cancel this action and allow URLs again in a channel, do this:
 The allowlist is a set of URLs that are marked as safe by a server. In
 order to add an element to the allowlist invoke the following command:
 
-`!allow_domains url1.com url2.com`
+`/add_to_allowlist url1.com url2.com`
 
 where `url1.com` and `url2.com` represent URLs that you wish to add to
 the allowlist. Allowlists are not shared between servers.
 
 ### How can I remove URLs from the allowlist?
 
-Simply type `!unallow_domains url1.com` to remove just `url1.com` from the allowlist.
+Use the slash command `/remove_from_allowlist url1.com` to remove just `url1.com` from the allowlist.
 
 ### Can you show me a flowchart of how Bouncer works?
 

@@ -62,7 +62,7 @@ Bouncer will log its activity to a channel called "#bouncer-log". There you can 
 The allowlist is a set of URLs that are marked as safe by a server. In
 order to add an element to the allowlist invoke the following command:
 
-`!allow_domains url1.com url2.com`
+`/add_to_allowlist url1.com url2.com`
 
 where `url1.com` and `url2.com` represent URLs that you wish to add to
 the allowlist. Allowlists are not shared between servers.
