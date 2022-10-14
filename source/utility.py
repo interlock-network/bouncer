@@ -21,15 +21,6 @@ def urls_from_str(content):
     return urls
 
 
-def str_from_list(urls):
-    """Return a human interpreted phrase from a list of urls."""
-    if len(urls) == 1:
-        return urls[0]
-    elif len(urls) == 2:
-        return urls[0] + " and " + urls[1]
-    return (urls.pop(0) + ", " + str_from_list(urls))
-
-
 # Parse the configuration.ini file in the repository root
 configuration = configparser.ConfigParser()
 configuration.read('configuration.ini')
