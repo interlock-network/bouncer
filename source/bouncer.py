@@ -2,6 +2,7 @@
 
 import logging
 
+import discord
 from gettext import gettext
 from urllib.parse import urlparse
 from model import AllowDomain, Message, Channel, SettingsAccessRequest
@@ -132,6 +133,23 @@ async def add_to_allowlist(ctx, url):
     logger.log(MESSAGE, "URL `%s` added to allow list.",
                url, extra={'server': ctx.guild})
     await ctx.respond(_("URL `{}` added to allow list.").format(url))
+
+
+@bot.slash_command()
+async def show_allowlist(ctx):
+    """Return the allowlist for the user to read."""
+    allow_list = session.query(AllowDomain).filter_by(server_id=ctx.guild.id).all()
+    result_string = ""
+    for allow_domain in allow_list:
+        if allow_domain.hostname:
+            result_string += allow_domain.hostname + "\n"
+
+    msg = discord.Embed(
+        title="Allow List",
+        description=result_string,
+        colour=discord.Colour.blue())
+
+    await ctx.respond(embed=msg)
 
 
 @bot.slash_command()
