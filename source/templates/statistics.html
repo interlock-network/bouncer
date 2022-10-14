@@ -1,16 +1,46 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
 <style>
   body {
-      margin: auto;
-      max-width: 600px;
+    background-color: #080b1a;
+    color: #fefeff;
+    margin: auto;
+    margin-top: 3rem;
+    max-width: 800px;
   }
+  @font-face {
+    font-family: 'THICCBOI';
+    src: url('fonts/Webfont/THICCCBOI-Regular.woff2') format('woff'),
+         url('fonts/TTF/THICCCBOI-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'THICCBOI-Bold';
+    src: url('fonts/Webfont/THICCCBOI-Bold.woff2') format('woff'),
+         url('fonts/TTF/THICCCBOI-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: bold;
+}
+
+h1 {
+    font-family: 'THICCBOI-Bold';
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+p {
+    font-family: 'THICCBOI';
+    font-size: 1.25rem;
+    line-height: 0.5rem;
+}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <h1>Bouncer Statistics</h1>
-<p>Number of servers protected: {{ server_count }}</p>
-<p>Number of users protected: {{ user_count }}</p>
+<p>Servers protected: {{ server_count }}</p>
+<p>Users protected: {{ user_count }} (raw count)</p>
+<br/>
 <p>URLs scanned: {{ urls_scanned_count }}</p>
-<p>Malicious URLs scanned: {{ malicious_urls_scanned_count }}</p>
+<p>Malicious URLs: {{ malicious_urls_scanned_count }}</p>
+<br/>
 <p>Unique URLs scanned: {{ unique_urls_scanned_count }}</p>
 <p>Unique malicious URLs scanned: {{ unique_malicious_urls_scanned_count }}</p>
