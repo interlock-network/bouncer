@@ -26,7 +26,7 @@ The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](
 
 ### Do I have to install any software to get Bouncer running?
 
-Nope! Bouncer clients are run on Interlock's AWS EC2 instances in the us-west-2 region.
+Nope! Bouncer clients are run on Interlock's DigitalOcean droplet.
 
 ### How can I get Bouncer for my Discord server?
 
@@ -72,29 +72,33 @@ Bouncer logs its activity to the channel "#bouncer-log". There you can see when:
 - A mod blocks all URLs from a channel (or vice versa)
   - And mod name
 
-### How can I block all links in a channel?
-
-To block all URLs in a channel, do this:
-
-`!block_links`
-
-To cancel this action and allow URLs again in a channel, do this:
-
-`!unblock_links`
-
 ### What's an allowlist? How can I add to my server's allowlist?
 
 The allowlist is a set of URLs that are marked as safe by a server. In
 order to add an element to the allowlist invoke the following command:
 
-`/add_to_allowlist url1.com url2.com`
+`/add_to_allowlist https://url1.com https://url2.com`
 
 where `url1.com` and `url2.com` represent URLs that you wish to add to
 the allowlist. Allowlists are not shared between servers.
 
 ### How can I remove URLs from the allowlist?
 
-Use the slash command `/remove_from_allowlist url1.com` to remove just `url1.com` from the allowlist.
+Use the slash command `/remove_from_allowlist https://url1.com` to remove just `url1.com` from the allowlist.
+
+### How can I show all the URLs on the allowlist?
+
+Use the slash command `/show_allowlist` to list all the URLs on the allowlist.
+
+### How can I block all links in a channel?
+
+To block all URLs in a channel, do this:
+
+`/block_links`
+
+To cancel this action and allow URLs again in a channel, do this:
+
+`/unblock_links`
 
 ### Can you show me a flowchart of how Bouncer works?
 

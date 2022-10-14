@@ -49,14 +49,15 @@ Here's a screenshot of the expected behavior:
 # Channel for Bouncer activity log
 
 Bouncer will log its activity to a channel called "#bouncer-log". There you can see when:
+
 - Bouncer deletes a malicious URL, complete with:
-  - Username of who posted the URL
-  - Channel it was posted in
   - The malicious URL
   - The message it was in (for context)
+  - User who posted the URL
+  - Channel it was posted in
 - A mod adds to an allowlist (or removes from one)
 - A mod blocks all URLs from a channel (or vice versa)
-  
+
 # Adding to the allowlist
 
 The allowlist is a set of URLs that are marked as safe by a server. In
@@ -66,6 +67,12 @@ order to add an element to the allowlist invoke the following command:
 
 where `url1.com` and `url2.com` represent URLs that you wish to add to
 the allowlist. Allowlists are not shared between servers.
+
+Simply use
+
+`/remove_from_allowlist url1`
+
+to remove a URL from the allowlist.
 
 # Block all links in a channel
 
@@ -106,7 +113,7 @@ To understand what Bouncer does in code, the best place to start is in `source/b
 
 # Infrastructure
 
-Bouncer clients are run on AWS EC2 instances in the us-west-2 region.
+Bouncer clients are run on Interlock's DigitalOcean droplet.
 
 # Maintainer
 
