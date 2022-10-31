@@ -44,53 +44,57 @@ async def process_message(message):
         channel_id=message.channel.id,
         server_id=message.guild.id).first()
     if channel and channel.block_links_p and str_contains_url_p(message.content):
-        logger.log(MESSAGE, "User `@%s` posted message `%s` in nolink channel `#%s`.",
-                   message.author.name,
-                   message.content,
-                   message.channel.name,
+        logger.log(MESSAGE, "Deleted: `%s`\nAuthor: `@%s`\nIn nolink channel: `#%s`",
+                   message.content, message.author.name, message.channel.name,
                    extra={'server': message.guild})
-        await message.reply(content=_("Denied! Mods said to block URLs from users in this channel."))
+        await message.reply(content=_("Denied! Mods said to block URLs in this channel."))
         await message.delete()
         return
 
     for url in urls_from_str(message.content):
         url_object = urlparse(url)
         if (allow_url_p(session, url_object, message.guild)):
-            logger.log(MESSAGE, "URL ignored: %s", url,
-                       extra={'server': message.guild})
+            logger.log(MESSAGE, "Allowlisted URL ignored: `%s`\nChannel: `#%s`",
+                       url, message.channel.name, extra={'server': message.guild})
             await message.reply(
                 content=_("Mods said `{0}` is safe.")
                 .format(url))
             break
         elif (len(url) > max_url_length):
             await message.reply(
-                content=_("Watch it! This message has URLs that can't be scanned. \n\
-**{0}:** `{1}`").format(message.author.name, message.content))
+                content=_(
+                    "Watch it! This message has URLs that can't be scanned.\n\**{0}:** `{1}`")
+                .format(message.author.name, message.content))
             await message.delete()
+            logger.log(MESSAGE, "Deleted URL too long to be scanned: `%s`\nAuthor: `@%s`\nChannel: `#%s`",
+                       url, message.author.name, message.channel.name, extra={'server': message.guild})
             break
         elif (not url_http_p(url)):
             await message.reply(
-                content=_("Watch it! This message has URLs that can't be scanned. \n\
-**{0}:** `{1}`").format(message.author.name, message.content))
+                content=_(
+                    "Watch it! This message has URLs that can't be scanned. \n\**{0}:** `{1}`")
+                .format(message.author.name, message.content))
             await message.delete()
-            logger.log(MESSAGE, "Ignoring `%s` because it is not HTTP/s",
-                       url, extra={'server': message.guild})
+            logger.log(MESSAGE, "Ignoring non-HTTP/S URL: `%s`\nChannel: `#%s`",
+                       url, message.channel.name, extra={'server': message.guild})
             break
         elif (url_malicious_p(url)):
             await message.reply(
-                content=_("Watch it! This message may have dangerous links. \n\
-**{0}:** `{1}`").format(message.author.name, message.content))
+                content=_(
+                    "Watch it! This message may have dangerous links. \n\**{0}:** `{1}`")
+                .format(message.author.name, message.content))
             if message.author.guild_permissions.administrator:
-                await message.reply("Hey mods, if this message is safe, just type `/add_to_allowlist {0}` and then post it again.".format(url))
+                await message.reply("Hey mods, if this message is safe, just type `/add_to_allowlist {0}` and then post it again."
+                                    .format(url))
             await message.delete()
-            logger.log(MESSAGE, "Dangerous URL deleted: `%s` \nMessage: `'%s'` \nAuthor: `@%s` \nChannel: `#%s`",
+            logger.log(MESSAGE, "Dangerous URL deleted: `%s`\nMessage: `'%s'`\nAuthor: `@%s`\nChannel: `#%s`",
                        url, message.content, message.author.name, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
             session.commit()
             break
         # If we have made it to this point, URL is OK
-        logger.log(MESSAGE, "Scanned safe URL `%s` \nChannel: `#%s`",
+        logger.log(MESSAGE, "Scanned safe URL: `%s`\nChannel: `#%s`",
                    url, message.channel.name,
                    extra={'server': message.guild})
 
@@ -138,7 +142,8 @@ async def add_to_allowlist(ctx, url):
 @bot.slash_command()
 async def show_allowlist(ctx):
     """Return the allowlist for the user to read."""
-    allow_list = session.query(AllowDomain).filter_by(server_id=ctx.guild.id).all()
+    allow_list = session.query(AllowDomain).filter_by(
+        server_id=ctx.guild.id).all()
     result_string = ""
     for allow_domain in allow_list:
         if allow_domain.hostname:
