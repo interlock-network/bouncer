@@ -63,7 +63,7 @@ async def process_message(message):
         elif (len(url) > max_url_length):
             await message.reply(
                 content=_(
-                    "Watch it! This message has URLs that can't be scanned.\n**{0}:** `{1}`")
+                    "Watch it! This message has URLs that can't be scanned.\n@{0}: `{1}`")
                 .format(message.author.name, message.content))
             await message.delete()
             logger.log(MESSAGE, "Deleted URL too long to be scanned: `%s`\nAuthor: `@%s`\nChannel: `#%s`",
@@ -72,20 +72,23 @@ async def process_message(message):
         elif (not url_http_p(url)):
             await message.reply(
                 content=_(
-                    "Watch it! This message has URLs that can't be scanned. \n**{0}:** `{1}`")
+                    "Watch it! This message has URLs that can't be scanned. \n@{0}: `{1}`")
                 .format(message.author.name, message.content))
             await message.delete()
             logger.log(MESSAGE, "Ignoring non-HTTP/S URL: `%s`\nChannel: `#%s`",
                        url, message.channel.name, extra={'server': message.guild})
             break
         elif (url_malicious_p(url)):
-            await message.reply(
-                content=_(
-                    "Watch it! This message may have dangerous links. \n**{0}:** `{1}`")
-                .format(message.author.name, message.content))
             if message.author.guild_permissions.administrator:
-                await message.reply("Hey mods, if this message is safe, just type `/add_to_allowlist {0}` and then post it again."
-                                    .format(url))
+                await message.reply(
+                    "Hey mods, Bouncer found this message to be dangerous:\n{0}\nIf it's safe, just type `/add_to_allowlist {1}` and post it again."
+                    .format(message.content, url))
+            else:
+                await message.reply(
+                    content=_(
+                        "Watch it! This message may have dangerous links. \n@{0}: `{1}`")
+                    .format(message.author.name, message.content))
+
             await message.delete()
             logger.log(MESSAGE, "Dangerous URL deleted: `%s`\nMessage: `'%s'`\nAuthor: `@%s`\nChannel: `#%s`",
                        url, message.content, message.author.name, message.channel.name,
