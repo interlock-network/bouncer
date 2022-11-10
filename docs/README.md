@@ -36,7 +36,7 @@ To get Bouncer for your server, email dan@interlock.network. You can also messag
 
 1. Add Bouncer as a friend to receive DMs, like links to the web editor.
 2. Assign a role to Bouncer (if users need a role to participate in public channels)
-3. Use `/add_to_allowlist [https://your_url1.com](https://your_url1.com) https://your_url1.com` to add your URLs to Bouncer's allowlist
+3. Use `/add_to_allowlist https://your_url1.com https://your_url2.com` to add your URLs to Bouncer's allowlist
 
 ### How do I get Bouncer to protect a channel?
 
