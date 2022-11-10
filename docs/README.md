@@ -14,11 +14,11 @@ Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 comp
 
 ### Is Bouncer in beta?
 
-It's actually in alpha. That means it is not feature complete and still buggy. The main challenge now is a relatively high number of false positives -- safe sites incorrectly categorized as unsafe.
+Yes! We are actively fixing bugs and making incremental improvements in existing features. But we are not currently adding new features.
 
 ### How much does Bouncer cost?
 
-While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Bouncer will be powered by $ILOCK, Interlock's token launching later this year.
+While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Bouncer will be powered by $ILOCK, Interlock's token launching early 2023.
 
 ### Where can I see the source code?
 
@@ -31,6 +31,12 @@ Nope! Bouncer clients are run on Interlock's DigitalOcean droplet.
 ### How can I get Bouncer for my Discord server?
 
 To get Bouncer for your server, email dan@interlock.network. You can also message Magnitude on the [Interlock Discord](https://discord.gg/ezraXYD8).
+
+### What are my next steps after inviting Bouncer?
+
+1. Add Bouncer as a friend to receive DMs, like links to the web editor.
+2. Assign a role to Bouncer (if users need a role to participate in public channels)
+3. Use `/add_allowlist [https://your_url1.com](https://your_url1.com) https://your_url1.com` to add your URLs to Bouncer's allowlist
 
 ### How do I get Bouncer to protect a channel?
 
