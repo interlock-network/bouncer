@@ -50,6 +50,12 @@ def settings_view():
     else:
         return "Access forbidden."
 
+@app.route('/user_count', methods=['GET'])
+def user_count():
+    user_count = 0
+    for server in bot.guilds:
+        user_count += server.member_count
+    return str(user_count)
 
 @app.route('/settings', methods=['POST'])
 def settings_save():
