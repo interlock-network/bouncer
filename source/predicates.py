@@ -27,7 +27,8 @@ def url_malicious_p(url):
         "url": url
     }
 
-    r = requests.post("{0}/malicious_p".format(backend_base_url), json=json_payload)
+    r = requests.post(
+        "{0}/malicious_p".format(backend_base_url), json=json_payload)
     rjson = r.json()
     return rjson['malicious']
 
