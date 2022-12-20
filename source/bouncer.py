@@ -132,22 +132,47 @@ async def remove_from_allowlist(ctx, url):
 async def add_to_allowlist(ctx, url):
     """Allow a domain in a given server."""
     url_object = urlparse(url)
-    session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
-    session.commit()
-    logger.log(MESSAGE, "URL `%s` added to allow list.",
-               url, extra={'server': ctx.guild})
-    await ctx.respond(_("URL `{}` added to allow list.").format(url))
+    netloc = url_object.netloc
+
+    allow_list = session.query(AllowDomain).filter_by(
+        server_id=ctx.guild.id).all()
+
+    is_dupe = False
+
+    for allow_domain in allow_list:
+        if allow_domain.hostname == netloc:
+            is_dupe = True
+
+    if is_dupe == True:
+        logger.log(MESSAGE, "URL `%s` already in allow list.",
+                   netloc, extra={'server': ctx.guild})
+        await ctx.respond(_("Note: URL `{}` was already on the allow list.").format(netloc))
+    else:
+        session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
+        session.commit()
+        logger.log(MESSAGE, "URL `%s` added to allow list.",
+                   url, extra={'server': ctx.guild})
+        await ctx.respond(_("URL `{}` added to allow list.").format(url))
 
 
 @bot.slash_command()
 async def show_allowlist(ctx):
-    """Return the allowlist for the user to read."""
+    """Return the alphabetized allowlist for the user to read."""
     allow_list = session.query(AllowDomain).filter_by(
         server_id=ctx.guild.id).all()
-    result_string = ""
+
+    allow_list_hostnames = []
+
     for allow_domain in allow_list:
         if allow_domain.hostname:
-            result_string += allow_domain.hostname + "\n"
+            allow_list_hostnames.append(allow_domain.hostname)
+
+    allow_list_hostnames.sort()
+
+    result_string = ""
+
+    for hostname in allow_list_hostnames:
+        result_string += hostname + "\n"
 
     msg = discord.Embed(
         title="Allow List",
