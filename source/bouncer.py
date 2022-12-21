@@ -84,7 +84,8 @@ async def process_message(message):
                 await message.reply("Hey mods, if this message is safe, just type `/add_to_allowlist {0}` and then post it again."
                                     .format(url))
             await message.delete()
-            logger.log(MESSAGE, "Dangerous URL deleted: `%s`\nMessage: `'%s'`\nAuthor: `@%s`\nChannel: `#%s`",
+            # color codes below from https://www.pythondiscord.com/pages/guides/python-guides/discord-messages-with-colors/
+            logger.log(MESSAGE, f"""```ansi\n\u001b[0;0m\u001b[1;31mDangerous URL deleted: `%s`\n\nMessage: `%s`\n\nBy @%s in #%s```""",
                        url, message.content, message.author.name, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
