@@ -85,7 +85,7 @@ async def process_message(message):
                                     .format(url))
             await message.delete()
             # color codes below from https://www.pythondiscord.com/pages/guides/python-guides/discord-messages-with-colors/
-            logger.log(MESSAGE, f"""```ansi\n\u001b[0;0m\u001b[1;31mDangerous URL deleted: `%s`\n\nMessage: `%s`\n\nBy @%s in #%s```""",
+            logger.log(MESSAGE, "```ansi\n\u001b[0;0m\u001b[1;31mDangerous URL deleted: `%s`\n\nMessage: `%s`\n\nBy @%s in #%s```",
                        url, message.content, message.author.name, message.channel.name,
                        extra={'server': message.guild})
             session.add(Message(str(message.author.id), message.content, True))
