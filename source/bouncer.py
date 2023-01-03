@@ -56,9 +56,6 @@ async def process_message(message):
         if (allow_url_p(session, url_object, message.guild)):
             logger.log(MESSAGE, "Allowlisted URL ignored: `%s`\nChannel: `#%s`",
                        url, message.channel.name, extra={'server': message.guild})
-            await message.reply(
-                content=_("Mods said `{0}` is safe.")
-                .format(url))
             break
         elif (len(url) > max_url_length):
             await message.reply(
