@@ -1,6 +1,7 @@
 """Predicates."""
 import requests
 import re
+from urllib.parse import urlparse
 
 from utility import urls_from_str, backend_base_url, backend_api_key
 from model import AllowDomain
@@ -21,10 +22,14 @@ def str_contains_url_p(str):
 
 
 def url_malicious_p(url):
+    """Strip URL parameters to protect sensitive user information"""
+    url = urlparse(url)
+    netloc = url.netloc
+
     """Return True or False depending on whether a URL is malicious or not."""
     json_payload = {
         "key": backend_api_key,
-        "url": url
+        "url": netloc
     }
 
     r = requests.post(
