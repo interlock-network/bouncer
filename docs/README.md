@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <img src="bouncer-dark.png" alt="Bouncer hand logo" align="right" width="250" height="250" style="padding: 1rem"/>
 
 # Bouncer FAQ
@@ -8,45 +6,36 @@
 
 Bouncer is an [open-source](https://github.com/interlock-network/bouncer) Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
+### How can I get Bouncer for my Discord server?
+
+[Invite Bouncer](https://discord.com/api/oauth2/authorize?client_id=982020138352128070&permissions=534723951680&scope=bot) to your server like any other bot (along with its recommended permissions) and your public channels will instantly be protected!
+
+### What are my next steps after inviting Bouncer?
+
+1. Create a private channel called `#bouncer-log` and invite Bouncer to it.
+2. Add Bouncer as a friend to receive DMs, like links to the web editor.
+3. Assign a role to Bouncer (if users need a role to participate in public channels)
+4. Use `/add_to_allowlist https://your_url1.com https://your_url2.com` to add your URLs to Bouncer's allowlist
+
 ### Who makes Bouncer?
 
 Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security.
 
 ### Is Bouncer in beta?
 
-Yes! We are actively fixing bugs and making incremental improvements in existing features. But we are not currently adding new features.
+Yes! We are gradually adding new features and fixing bugs. If you spot a bug, email us at bouncer@interlock.network or create a [bug ticket in our GitHub repo](https://github.com/interlock-network/bouncer/issues/new?assignees=&labels=bug%2C+feature+request&template=bug_report.md&title=%5BBUG%5D+).
 
 ### How much does Bouncer cost?
 
-While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Bouncer will be powered by $ILOCK, Interlock's token launching early 2023.
+While in testing, Bouncer is free to use in exchange for an occasional Interlock partnership post. In the future, Bouncer will be powered by $ILOCK, Interlock's token launching in 2023.
 
 ### Where can I see the source code?
 
-The Bouncer repo is at [https://github.com/interlock-network/bouncer](https://github.com/interlock-network/bouncer). The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
+The Bouncer repo is at [https://github.com/interlock-network/bouncer](https://github.com/interlock-network/bouncer). The pipeline that scans URLs is proprietary, because if hackers could read the code, they could figure out new ways to circumvent it.
 
 ### Do I have to install any software to get Bouncer running?
 
 Nope! Bouncer clients are run on Interlock's DigitalOcean droplet.
-
-### How can I get Bouncer for my Discord server?
-
-To get Bouncer for your server, email dan@interlock.network. You can also message Magnitude on the [Interlock Discord](https://discord.gg/ezraXYD8).
-
-### What are my next steps after inviting Bouncer?
-
-1. Add Bouncer as a friend to receive DMs, like links to the web editor.
-2. Assign a role to Bouncer (if users need a role to participate in public channels)
-3. Use `/add_to_allowlist https://your_url1.com https://your_url2.com` to add your URLs to Bouncer's allowlist
-
-### How do I get Bouncer to protect a channel?
-
-First, click on settings for the channel.
-
-<img width="421" alt="Clicking on a channel's settings" src="edit_channel.png">
-
-Then, invite Bouncer to the channel and give it Admin access. That's so Bouncer can delete unsafe messages and do what it needs to protect the channel.
-
-<img width="421" alt="Invite Bouncer to the channel" src="invite.png">
 
 ### I've installed Bouncer! How can I make sure it's working as expected?
 
@@ -74,7 +63,7 @@ Bouncer logs its activity to the channel "#bouncer-log". There you can see when:
 - A mod adds to an allowlist (or removes from one)
 - A mod blocks all URLs from a channel (or vice versa)
 
-  <img width="421" alt="Bouncer log message after deleting a malicious link" src="deleted-log.png">
+<img width="421" alt="Bouncer log message after deleting a malicious link" src="deleted-log.png">
 
 ### What's an allowlist? How can I add to my server's allowlist?
 

@@ -1,62 +1,58 @@
-<!-- @format -->
-
-# Interlock-Bouncer
+# Bouncer
 
 <img src="docs/bouncer-dark.png" align="right" width="250" height="250"/>
 
-Interlock-Bouncer is a Discord bot that scans your server for
+Bouncer is a Discord bot that scans your server for
 malicious links and neutralizes them. It does this by querying our
 database of known-malicious sites. If the site is new, we use our
 proprietary visual AI to identify 0-day phishing sites. Setup takes
 just a minute or two and it begins protecting your server instantly.
 
-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is
-decentralizing security. It's free to use in exchange for an
+Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security. It's free to use in exchange for an
 occasional Interlock partnership post. In the future,
 Bouncer will be powered by $ILOCK, Interlock's token
 launching later this year. The repo is at
-[https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer).
+[https://github.com/interlock-network/bouncer](https://github.com/interlock-network/bouncer).
 
-You can check out our [FAQ](https://interlock-network.github.io/interlock-bouncer/) for more information.
+You can check out our [FAQ](https://interlock-network.github.io/bouncer/) for more information.
 
 # Status
 
-Bouncer is in alpha. It occasionally shows false positives -- safe links marked as dangerous.
-We're also adding new features all the time.
+Bouncer is in beta. It occasionally shows false positives -- safe links marked as dangerous. We're also adding new features all the time.
 
-# Authorizing for your server
+# How to get Bouncer
 
-If you are an alpha user, contact us for the URL to authorize Bouncer to run on your own server.
+[Invite Bouncer](https://discord.com/api/oauth2/authorize?client_id=982020138352128070&permissions=534723951680&scope=bot) to your server like any other bot (along with its recommended permissions) and your public channels will instantly be protected!
 
-Not yet an alpha user? Contact Magnitude on our [Discord server](https://discord.gg/ezraXYD8) and let's talk!
+Your next step is to create a private channel called `#bouncer-log` and invite Bouncer to it. For more info on logging, see "Channel for Bouncer activity log" below.
 
 # Testing
 
 To test if Bouncer is working, post the following
-known-unsafe link in a channel Bouncer is monitoring:
-`http://phishing.com`
+known-unsafe link in a channel Bouncer is monitoring: `http://xp11xp.vov.ru/`
 
 Your message should immediately be deleted and Bouncer should post the following:
 
 ```
-Message contains dangerous links! NAME: http://phishing.com
+Watch it! This message may have dangerous links. NAME: http://xp11xp.vov.ru/
 ```
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="docs/screenshot.png">
+<img width="421" alt="Bouncer reacting to a malicious link" src="docs/deleted.png">
 
 # Channel for Bouncer activity log
 
-Bouncer will log its activity to a channel called "#bouncer-log". There you can see when:
+Bouncer logs its activity to a channel called "#bouncer-log". You must manually create this channel and invite Bouncer to it. There you can see when:
 
 - Bouncer deletes a malicious URL, complete with:
   - The malicious URL
   - The message it was in (for context)
-  - User who posted the URL
-  - Channel it was posted in
+  - Username and channel it was posted in
 - A mod adds to an allowlist (or removes from one)
 - A mod blocks all URLs from a channel (or vice versa)
+
+<img width="421" alt="Bouncer log message after deleting a malicious link" src="docs/deleted-log.png">
 
 # Adding to the allowlist
 
