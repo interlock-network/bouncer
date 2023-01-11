@@ -6,7 +6,7 @@
 
 ### What is Bouncer? How does it work?
 
-Interlock-Bouncer is an [open-source](https://github.com/interlock-network/interlock-bouncer) Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
+Bouncer is an [open-source](https://github.com/interlock-network/bouncer) Discord bot that scans your server for malicious links and neutralizes them. It does this by querying our database of known-malicious sites. If the site is new, we use our proprietary visual AI to identify 0-day phishing sites. Setup takes just a minute or two and it begins protecting your server instantly.
 
 ### Who makes Bouncer?
 
@@ -22,7 +22,7 @@ While in testing, Bouncer is free to use in exchange for an occasional Interlock
 
 ### Where can I see the source code?
 
-The Bouncer repo is at [https://github.com/interlock-network/interlock-bouncer](https://github.com/interlock-network/interlock-bouncer). The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
+The Bouncer repo is at [https://github.com/interlock-network/bouncer](https://github.com/interlock-network/bouncer). The pipeline that scans URLs is proprietary, because if hackers could read the code they could figure out new ways to circumvent it.
 
 ### Do I have to install any software to get Bouncer running?
 
@@ -50,33 +50,31 @@ Then, invite Bouncer to the channel and give it Admin access. That's so Bouncer 
 
 ### I've installed Bouncer! How can I make sure it's working as expected?
 
-Post the following known-unsafe link in a channel Bouncer is monitoring:
-`http://phishing.com`
+Post the following known-unsafe link in a channel Bouncer is monitoring: `http://xp11xp.vov.ru/`
 
 Your message should immediately be deleted and Bouncer
 should post the following:
 
 ```
-Message contains dangerous links! NAME: http://phishing.com
+Watch it! This message may have dangerous links. NAME: http://xp11xp.vov.ru/
 ```
 
 Here's a screenshot of the expected behavior:
 
-<img width="421" alt="Interlock-Bouncer reacting to a malicious link" src="screenshot.png">
+<img width="421" alt="Bouncer reacting to a malicious link" src="deleted.png">
 
 ### Where can I see Bouncer's actions?
 
 Bouncer logs its activity to the channel "#bouncer-log". There you can see when:
 
 - Bouncer deletes a malicious URL, complete with:
-  - Username of who posted the URL
-  - Channel it was posted in
   - The malicious URL
   - The message it was in (for context)
+  - Username and channel it was posted in
 - A mod adds to an allowlist (or removes from one)
-  - And mod name
 - A mod blocks all URLs from a channel (or vice versa)
-  - And mod name
+
+  <img width="421" alt="Bouncer log message after deleting a malicious link" src="deleted-log.png">
 
 ### What's an allowlist? How can I add to my server's allowlist?
 
