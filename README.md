@@ -8,8 +8,7 @@ database of known-malicious sites. If the site is new, we use our
 proprietary visual AI to identify 0-day phishing sites. Setup takes
 just a minute or two and it begins protecting your server instantly.
 
-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is
-decentralizing security. It's free to use in exchange for an
+Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security. It's free to use in exchange for an
 occasional Interlock partnership post. In the future,
 Bouncer will be powered by $ILOCK, Interlock's token
 launching later this year. The repo is at
@@ -21,11 +20,11 @@ You can check out our [FAQ](https://interlock-network.github.io/bouncer/) for mo
 
 Bouncer is in beta. It occasionally shows false positives -- safe links marked as dangerous. We're also adding new features all the time.
 
-# Authorizing for your server
+# How to get Bouncer
 
-[Invite Bouncer](https://discord.com/api/oauth2/authorize?client_id=982020138352128070&permissions=534723951680&scope=bot) to your server like any other bot and your public channels will instantly be protected!
+[Invite Bouncer](https://discord.com/api/oauth2/authorize?client_id=982020138352128070&permissions=534723951680&scope=bot) to your server like any other bot (along with its recommended permissions) and your public channels will instantly be protected!
 
-Your next step is to create a private channel called "#bouncer-log" and invite Bouncer to it. For more info on logging, see "Channel for Bouncer activity log" below.
+Your next step is to create a private channel called `#bouncer-log` and invite Bouncer to it. For more info on logging, see "Channel for Bouncer activity log" below.
 
 # Testing
 
