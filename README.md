@@ -2,16 +2,17 @@
 
 <img src="docs/bouncer-dark.png" align="right" width="250" height="250"/>
 
-Bouncer is a Discord bot that scans your server for
-malicious links and neutralizes them. It does this by querying our
-database of known-malicious sites. If the site is new, we use our
-proprietary visual AI to identify 0-day phishing sites. Setup takes
-just a minute or two and it begins protecting your server instantly.
+Bouncer is an open-source Discord bot that scans your server for malicious 
+links and neutralizes them. It does this by querying our database of 
+known-malicious sites. If the site is new, we use our proprietary visual 
+AI to identify 0-day phishing sites. Setup takes just a minute or two and 
+it begins protecting your server instantly.
 
-Bouncer is a project of [Interlock](https://www.interlock.network/), a web3 company that is decentralizing security. It's free to use in exchange for an
-occasional Interlock partnership post. In the future,
+Bouncer is a project of [Interlock](https://www.interlock.network/), 
+a web3 company that is decentralizing security. It's free to use in 
+exchange for an occasional Interlock partnership post. In the future,
 Bouncer will be powered by $ILOCK, Interlock's token
-launching later this year. The repo is at
+launching later this year. The repo is right here at
 [https://github.com/interlock-network/bouncer](https://github.com/interlock-network/bouncer).
 
 You can check out our [FAQ](https://interlock-network.github.io/bouncer/) for more information.
