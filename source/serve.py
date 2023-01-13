@@ -88,3 +88,11 @@ def user_count():
 def server_count():
     server_count = len(bot.guilds)
     return str(server_count)
+
+@app.route('/servers', methods=['POST'])
+@require_key
+def servers():
+    servers = []
+    for server in bot.guilds:
+        servers.append([server.name, server.member_count])
+    return servers
