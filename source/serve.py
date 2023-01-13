@@ -2,7 +2,7 @@
 
 import requests
 from flask import Flask, request, render_template
-from utility import bot, session, backend_api_key, backend_base_url
+from utility import bot, session
 from model import SettingsAccessRequest, AllowDomain
 from model import find_or_create_channel
 from urllib.parse import urlparse
