@@ -2,7 +2,7 @@
 
 import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, Boolean, Column, Text, create_engine
+from sqlalchemy import Integer, Boolean, Column, Text, create_engine, String
 from sqlalchemy.types import TIMESTAMP
 from utility import session, configuration
 
@@ -107,6 +107,18 @@ class SettingsAccessRequest(Base):
         self.server_name = server_name
         self.channel_name = channel_name
         self.time = datetime.datetime.now()
+
+
+class APIKey(Base):
+    """This class represents an API key."""
+
+    __tablename__ = 'api_key'
+
+    key = Column(String(1024), primary_key=True)
+
+    def __init__(self, key):
+        """Create an API key."""
+        self.key = key
 
 
 if __name__ == '__main__':
