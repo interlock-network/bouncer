@@ -129,22 +129,26 @@ async def remove_from_allowlist(ctx, url):
 @bot.slash_command()
 async def add_to_allowlist(ctx, url):
     """Allow a domain in a given server."""
-    url = urlparse(url)
-    netloc = url.netloc
+    url_object = urlparse(url)
 
+    if url_object.scheme == '':
+        url = 'https://' + url
+        url_object = urlparse(url)
+
+    # TODO test is_dupe
     is_dupe = session.query(AllowDomain).filter_by(
-        server_id=ctx.guild.id, hostname=netloc).first()
+        server_id=ctx.guild.id, hostname=url).first()
 
     if is_dupe == True:
         logger.log(MESSAGE, "URL `%s` already in allow list.",
-                   netloc, extra={'server': ctx.guild})
-        await ctx.respond(_("Note: URL `{}` was already on the allow list.").format(netloc))
+                   url, extra={'server': ctx.guild})
+        await ctx.respond(_("Note: URL `{}` was already on the allow list.").format(url))
     else:
-        session.add(AllowDomain(url.hostname, str(ctx.guild.id)))
+        session.add(AllowDomain(url_object.hostname, str(ctx.guild.id)))
         session.commit()
         logger.log(MESSAGE, "URL `%s` added to allow list.",
                    url, extra={'server': ctx.guild})
-        await ctx.respond(_("URL `{}` added to allow list.").format(url.geturl()))
+        await ctx.respond(_("URL `{}` added to allow list.").format(url))
 
 
 @bot.slash_command()
