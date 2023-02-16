@@ -22,3 +22,7 @@ database:
 .PHONY: rsync_push
 rsync_push:
 	rsync -ar --progress "$$(pwd)/" "$(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)" --filter=':- .gitignore'
+
+.PHONY: remote_restart
+remote_restart:
+	ssh "$(SSH_USER)@$(SSH_HOST)" 'systemctl restart bouncer'
