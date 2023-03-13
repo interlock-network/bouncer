@@ -107,10 +107,9 @@ async def web_channel_edit(ctx):
     session.add(SettingsAccessRequest(key, ctx.guild.id, ctx.channel.id,
                                       ctx.guild.name, ctx.channel.name))
     session.commit()
-    await ctx.author.send(
-        "Yo! To edit your Bouncer settings for channel `#{}` in server `{}`, click {}/settings?key={}. This URL can only be used once!".format(
-            ctx.channel.name, ctx.guild.name, bouncer_domain, key))
-    await ctx.respond("Check your DMs for your one-time link to edit this channel on the web.")
+    await ctx.respond(
+        "Yo! To edit Bouncer settings for channel `#{}`, click {}/settings?key={}. This URL can only be used once!".format(
+            ctx.channel.name, bouncer_domain, key), ephemeral=True)
 
 
 @bot.slash_command()
