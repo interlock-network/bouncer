@@ -144,7 +144,7 @@ async def show_allowlist(ctx):
 
     allow_list_hostnames.sort()
 
-    result_string = ""
+    result_string = "List: "
 
     for hostname in allow_list_hostnames:
         result_string += hostname + "\n"
