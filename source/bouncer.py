@@ -149,12 +149,7 @@ async def show_allowlist(ctx):
     for hostname in allow_list_hostnames:
         result_string += hostname + "\n"
 
-    msg = discord.Embed(
-        title="Allow List",
-        description=result_string,
-        colour=discord.Colour.blue())
-
-    await ctx.respond(embed=msg)
+    await ctx.respond(result_string)
 
 
 @bot.slash_command()
