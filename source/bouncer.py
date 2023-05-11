@@ -5,17 +5,16 @@ import logging
 import discord
 from gettext import gettext
 from urllib.parse import urlparse
-from model import AllowDomain, Message, Channel, SettingsAccessRequest
+from model import AllowDomain, Message, Channel
 from model import find_or_create_channel
 from utility import urls_from_str, session, bot, token, configuration, MESSAGE
-from utility import max_url_length, bouncer_domain
+from utility import max_url_length
 from predicates import (url_http_p, url_malicious_p, allow_url_p,
                         str_contains_url_p)
 from discord_logger import DiscordLogger
 
 from secrets import token_urlsafe
 from threading import Thread
-from serve import app
 
 # Setup gettext for i18n
 _ = gettext
@@ -98,21 +97,6 @@ async def process_message(message):
 
 
 @bot.slash_command()
-async def web_channel_edit(ctx):
-    """Allow the user to edit channel settings via a web interface."""
-    if not ctx.author.guild_permissions.ban_members:
-        await ctx.respond("Denied! You're not authorized to do this.")
-        return
-    key = token_urlsafe(32)
-    session.add(SettingsAccessRequest(key, ctx.guild.id, ctx.channel.id,
-                                      ctx.guild.name, ctx.channel.name))
-    session.commit()
-    await ctx.respond(
-        "Yo! To edit Bouncer settings for channel `#{}`, click {}/settings?key={}. This URL can only be used once!".format(
-            ctx.channel.name, bouncer_domain, key), ephemeral=True)
-
-
-@bot.slash_command()
 async def remove_from_allowlist(ctx, url):
     """Remove a domain from the allow list in a given server."""
     url_object = urlparse(url)
@@ -160,17 +144,12 @@ async def show_allowlist(ctx):
 
     allow_list_hostnames.sort()
 
-    result_string = ""
+    result_string = "List: "
 
     for hostname in allow_list_hostnames:
         result_string += hostname + "\n"
 
-    msg = discord.Embed(
-        title="Allow List",
-        description=result_string,
-        colour=discord.Colour.blue())
-
-    await ctx.respond(embed=msg)
+    await ctx.respond(result_string)
 
 
 @bot.slash_command()
@@ -221,7 +200,4 @@ async def on_message_edit(message_before, message_after):
     await process_message(message_after)
 
 if __name__ == '__main__':
-    # Start Flask on a separate thread.
-    Thread(target=lambda: app.run(debug=False,
-           use_reloader=False, host='0.0.0.0', port=3000)).start()
     bot.run(token)

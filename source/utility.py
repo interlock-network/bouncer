@@ -32,9 +32,6 @@ backend_api_key = configuration.get('backend', 'api_key')
 # Max URL length
 max_url_length = configuration.getint('configuration', 'max_url_length')
 
-# Parse the bouncer domain information
-bouncer_domain = configuration.get('configuration', 'domain')
-
 # Setup the SQLAlchemy session
 sqlalchemy_url = configuration.get('persistence', 'sqlalchemy_url')
 engine = create_engine(sqlalchemy_url,
