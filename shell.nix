@@ -10,5 +10,4 @@ in
   sqlalchemy
   requests
   flask
-  python-lsp-server
 ])).env
