@@ -5,7 +5,7 @@ let
   };
 
 in
-(pkgs.python39.withPackages (ps: with ps; [
+(pkgs.python310.withPackages (ps: with ps; [
   (pycord ps)
   sqlalchemy
   requests
